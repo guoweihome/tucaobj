@@ -1,0 +1,63 @@
+<script type="text/javascript">
+  function apply(obj){
+        // alert(obj);
+         if('${user!}'!=null&&'${user!}'!=''){
+            $.ajax( {
+              url : "/member/applyJson.jhtml",
+              type: "post",
+              data:{
+               "u": obj,
+             },
+             dataType:"json",
+             
+            success:function (response) {
+                // alert(response.message);  
+            	 bootbox.alert(response.message);            
+            }
+           });               
+         }else{
+            bootbox.alert('请登陆后加好友!');
+         }
+     }
+    
+
+    if("${qqlogin!}"!=null&&"${qqlogin!}"=='1'){
+       $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"${base}/qquser_bind.jspx"
+        });
+       $('#myModal').modal({show:true,backdrop:false});
+    }
+   
+     if("${sinalogin!}"!=null&&"${sinalogin!}"=='1'){
+       $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"${base}/sinauser_bind.jspx"
+        });
+   	$('#myModal').modal({show:true,backdrop:false});
+    } 
+</script>
+<div>
+<footer class="footer">
+  <div class="container">
+  	<div class="well">
+		<p><strong>友情链接：</strong>
+[@cms_friendlink_list][#list tag_list as link]
+<a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+[/#list][/@cms_friendlink_list]
+	   </p>
+	</div>
+	<div class="text-center" style="display: block;line-height: 22px;padding: 10px 0;border-bottom: #d8d8d8 1px solid;width: 100%;">
+		<a href="http://webscan.360.cn/index/checkwebsite/url/www.tucaobj.com"><img border="0" src="http://img.webscan.360.cn/status/pai/hash/38356b910c20643ea26d1c869fdee5b4"/></a>
+		<a href="http://index.keqie.com/?kw=www.tucaobj.com" target="_blank" title="渴切指数"><img src="http://index.keqie.com/imgs/logo-128x27.png" border="0"></a>
+		<br>
+		联系方式：QQ 397281627 309403070
+		<br>
+		Copyright © 2013-2013 www.tucaobj.com, All Rights Reserved <a href="http://www.miitbeian.gov.cn/" target="_blank">豫ICP备13015285号</a>
+<script src="http://s17.cnzz.com/stat.php?id=5517918&web_id=5517918&show=pic" language="JavaScript"></script>
+	</div>
+  </div>
+</footer>
+</div>

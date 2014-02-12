@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>${site.name} - 吐槽北京网</title>
+    <meta name="keywords" content="吐槽网、吐槽北京网、吐槽地铁、吐槽黑中介、吐槽电商、吐槽" />
+    <meta name="description" content="吐槽北京中介、交通等民生话题" /> 
+	<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+    <link href="/${res}/bbs_forum/css/whole.css" type="text/css" rel="stylesheet" />
+    <link href="/${res}/bbs_forum/css/layout.css" type="text/css" rel="stylesheet" />
+    <link href="/${res}/bbs_member/css/set.css" type="text/css" rel="stylesheet" />
+     <link href="/bj/css/front.css" rel="stylesheet" type="text/css"/>
+     <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+     [#include "../include/common-header.html"/]	
+  </head>
+  <body>
+     [#include "./个人中心导航.html"/] 
+    <div style="margin-top:50px"></div>
+    <div id="main_content">
+	<div class="container">
+	 <div class="row">
+	   
+	    <ul class="breadcrumb" style="margin: 0 0 10px 25px;">
+        <li><a href="${base}/">${site.name}</a><span class="divider">/</span></li>
+	   <li class="active">&raquo; 会员中心</li>
+	   </ul>	
+	   
+	   <div class="span3">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">会员中心首页</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					 [#include "会员中心页_导航.html"/]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   	
+	   	</div>
+	   <div class="span9">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">信息</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					 <table cellspacing="0" cellpadding="0" width="100%" border="0">
+      <tbody>
+        <tr>
+          <td class="tac" width="80" style="vertical-align: top"><img height="80" width="80" name="useravatars" alt="" [#if user.avatar??][#if user.avatar?contains('user/images')]src="${user.avatar!}"[#else]src="/${res}/bbs_member/img/face/${(user.avatar)!'none.gif'}"[/#if][#else]src="/${res}/bbs_member/img/face/${(user.avatar)!'none.gif'}"[/#if]/><br />
+          <div style="padding-right: 0px; padding-left: 0px; padding-bottom: 0.3em; padding-top: 0.3em"><a class="gray" href="${base}/member/information.jhtml">修改头像</a></div>
+          </td>
+          <td style="padding-left: 1.5em; vertical-align: top">
+          <div class="bdbdash" style="padding-right: 0px; padding-left: 0px; padding-bottom: 1em; padding-top: 0px">
+          <div><span style="font: bold 16px Verdana">${user.username}</span> <span class="gray">(数字ID:${user.id})</span> <a class="link5" href="${base}/member/information.jhtml">编辑资料</a></div>
+          <div><a class="link5" href="index.jhtml">我的首页</a>　<a class="link5" href="${base}/member/mytopic.jhtml">我的主题</a>　<a class="link5" href="${base}/member/mypost.jhtml">我的回复</a></div>
+          <div class="bdbdash" style="padding-right: 0px; padding-left: 0px; padding-bottom: 1em; padding-top: 1em">
+          <table class="set-table1" cellspacing="0" cellpadding="0" width="80%" border="0">
+            <tbody>
+              <tr>
+                <td class="tdpr2" width="44%">精华：${user.primeCount!}<br />
+                发帖： ${user.topicCount!}<br />
+                积分： ${user.point!}&nbsp;&nbsp;威望： ${user.prestige!}<br />
+                回复： ${user.replyCount!}<br />
+                </td>
+                <td class="gray" width="56%">会员头衔：${user.group.name}<br />
+                会员级别： <img alt="" src="/${res}/bbs_forum/img/level/${user.group.imgPath}.gif" /> <br />
+                注册时间： ${user.registerTime?string('yyyy-MM-dd')}<br />
+                最后登录： ${user.lastLoginTime!}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="bdbdash" style="padding-right: 0px; padding-left: 0px; padding-bottom: 1em; padding-top: 1em">
+          <table class="set-table1" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+              <tr>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+	   				</ul>
+	   			</div>
+	   		</div>
+	       </div>	       
+	  <div>
+	  
+	    
+	 </div>
+	 
+	 </div>
+	
+	 
+	 
+	  
+	 
+	      
+	  
+	</div>
+	</div>
+
+  [#include "../include/页脚.html"/]
+	
+	
+
+   
+    
+ 
+		
+  </body>
+</html>

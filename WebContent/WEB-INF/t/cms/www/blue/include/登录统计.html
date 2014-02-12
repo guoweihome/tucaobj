@@ -1,0 +1,10 @@
+[#if user??]
+<div class="dlkbg">
+	<div class="t3 cc">
+		<div class="cc" id="nav-user">
+			欢迎您：${user.username} &nbsp;&nbsp;
+			[#if user.group??]【级别：${user.group.name}】[/#if]
+		</div>
+	</div>
+</div>
+[/#if]

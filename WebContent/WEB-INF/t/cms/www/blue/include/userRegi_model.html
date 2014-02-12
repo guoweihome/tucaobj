@@ -1,0 +1,96 @@
+
+
+
+  		<div id="loginError2" class="text-center"></div>
+		 <form class="form-horizontal" id="jvForm" >
+		 
+		  <div class="control-group">
+		    <label class="control-label" for="username">用户名</label>
+		    <div class="controls">
+		      <input type="text" name="username" id="username" placeholder="请输入用户名"  data-rule="required;username" />
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="password">密码</label>
+		    <div class="controls">
+		      <input type="password" name="password" id="password" placeholder="请输入密码"  data-rule="required;password"/>
+		    </div>
+		  </div>
+		<div class="control-group">
+		    <label class="control-label" for="passwordok">确认密码</label>
+		    <div class="controls">
+		      <input type="password" name="passwordok" id="passwordok" placeholder="请输入确认密码"  data-rule="required;password"/>
+		    </div>
+		 </div>
+		 <div class="control-group">
+		    <label class="control-label" for="email">Email</label>
+		    <div class="controls">
+		      <input type="text" name="email" id="email" placeholder="请输入email" data-rule="required;email"/>
+		    </div>
+		 </div>
+		 
+		 <div class="control-group">
+		    <label class="control-label" for="password">验证码</label>
+		    <div class="controls">
+		      <input type="text" class="input" name="captcha" id="captcha"  placeholder="请输入验证码" data-rule="required"/>
+		       <img height="35px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+		    </div>
+		 </div>
+		
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit"  class="btn btn-primary" id="regeBtn" data-loading-text="正在注册">同意以下协议并提交</button>
+		    </div>
+		  </div>
+		  <hr/>
+		   <div class="control-group">
+		      <label class="control-label">
+		               快捷登录
+		      </label>
+		      <div class="controls">
+		      <a href="${base}/qqindex.jspx" target="_blank"><img src="/bj/img/qq_login.gif" /></a>&nbsp;&nbsp;&nbsp;
+		      <a href="${base}/sinaindex.jspx" target="_blank" ><img src="/bj/img/sina_login.png"/></a>
+		      </div>
+		  </div>		 
+		</form>
+
+ <script type="text/javascript">
+   $("document").ready(function(){
+       var ajaxOptions = {
+            url:"${base}/user_register.jspx",
+            type:'post',
+            dataType:'json',
+            timeout:10000,
+            cache:false,
+            beforeSubmit:function(){
+             
+              if($("#password").val()!=$("#passwordok").val()){
+                 bt_alert.info("loginError2","用户密码和确认密码不一致!");
+                 return false;
+               }
+            },
+            success : function(responseJson) {
+                   if(responseJson.success){
+                         bt_alert.info("loginError2","注册成功");
+		                window.setTimeout('window.location.reload()',1000); 
+                  }else{
+                       bt_alert.error("loginError2",responseJson.msg);
+                  }
+            },
+		    error:function(xhr, ajaxOptions, thrownError){
+		        	bt_alert.error("loginError2","Http status: " + xhr.status + " " + xhr.statusText);
+		    }
+        };
+        
+       $("#regeBtn").click(function(){
+        
+         $('#jvForm').off('valid.form');
+         $('#jvForm').on('valid.form', function(e, form){          
+                 $("#jvForm").ajaxSubmit(ajaxOptions);
+         });
+       
+             
+       });
+   });
+</script>
+

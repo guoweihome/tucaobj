@@ -1,0 +1,135 @@
+
+
+
+  		<div id="loginError4" class="text-center"></div>
+		 <form class="form-horizontal" id="jvFormqq" >
+		 
+		  <div class="control-group">
+		    <label class="control-label" for="username">用户名</label>
+		    <div class="controls">		    
+		      <input type="text" name="username" id="username" placeholder="请输入用户名"  data-rule="required;username"/>
+		      <a id="regeUserModel3" >注册</a>
+		    </div>
+		  </div>
+		  
+		 <div class="control-group">
+		   <label class="control-label" for="password">密码</label>
+		    <div class="controls">
+		      <input type="password" name="password" id="password" placeholder="请输入密码"  data-rule="required;password"/>
+		      <a id="getPasswordModel2" >找回密码</a>
+		    </div>
+		 </div>
+		 
+		 <div class="control-group">
+		    <label class="control-label" for="captcha">验证码</label>
+		    <div class="controls">
+		      <input type="text" class="input" name="captcha" id="captcha"  placeholder="请输入验证码" data-rule="required"/>
+		       <img height="35px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+		    </div>
+		 </div>
+		
+		  [#if returnUrl?? && returnUrl?length gt 0]
+              <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+                [#else]
+                   <input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+              
+              [/#if]
+              
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit"  class="btn btn-primary" id="qqbindBtn" data-loading-text="正在QQ与账户绑定">QQ与账户绑定</button>
+		      <button type="button"  class="btn btn-primary" id="qqnobindBtn" data-loading-text="正在提交">不绑定</button>
+		    </div>
+		  </div>
+		  <hr/>
+		   <div class="control-group">
+		      <label class="control-label">
+		                 说明:
+		      </label>
+		      <div class="controls">
+		         QQ不与账户绑定,系统会自动生成一个默认账户!
+		      </div>
+		  </div>			 
+		</form>
+ <script type="text/javascript">
+ $("document").ready(function(){
+
+         var ajaxOptions = {
+            url:"${base}/user_loginbind.jspx",
+            type:'post',
+            dataType:'json',
+            timeout:10000,
+            cache:false,
+            success : function(responseJson) {
+                   if(responseJson.success){
+                         bt_alert.info("loginError4","绑定qq成功");
+		                window.setTimeout('window.location.reload()',1000); 
+                  }else{
+                       bt_alert.error("loginError4",responseJson.msg);
+                  }
+            },
+		    error:function(xhr, ajaxOptions, thrownError){
+		        	bt_alert.error("loginError4","Http status: " + xhr.status + " " + xhr.statusText);
+		    }
+        };
+        
+       $("#qqbindBtn").click(function(){
+        
+         $('#jvFormqq').off('valid.form');
+         $('#jvFormqq').on('valid.form', function(e, form){          
+                 $("#jvFormqq").ajaxSubmit(ajaxOptions);
+         });
+           
+       });
+	
+	 $("#qqnobindBtn").click(function(){        
+           $.ajax( {
+            url : "${base}/user_loginnobind.jspx",
+            type: "POST",
+            data:{
+                "processUrl":"",
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+               if(result.success){
+                     bt_alert.info("loginError4","一键登录成功");
+		             window.setTimeout('window.location.reload()',1000); 
+                }else{
+                    bt_alert.error("loginError4",result.msg);
+                }      
+            }
+          });      
+       });
+
+    $("#getPasswordModel2").click(function(){
+		$('#myModal').modal('hide');
+		 window.setTimeout(infopass,1000);
+		
+	});
+	
+	function infopass(){
+	   $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"/member/forgot_pwd.jspx"
+        });
+	}
+	
+	$("#regeUserModel3").click(function(){
+		$('#myModal').modal('hide');
+		 window.setTimeout(info,1000);
+		
+	});
+	
+	function info(){
+	   $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"/user_register.jspx"
+        });
+	}
+    
+ });
+
+</script>

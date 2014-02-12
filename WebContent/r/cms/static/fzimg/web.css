@@ -1,0 +1,33 @@
+@charset "gb2312";
+/* CSS Document */
+body{margin:0px ; font-family:"ËÎÌו"; font-size:12px; line-height:24px;}
+.top_1{height:92px; background:#B4B558 url(1_01.jpg) repeat-x; border-top:1px #A5A649 solid;}
+.top_2{height:374px; background:#E6E3C8 url(1_05.jpg) repeat-x;}
+.left_box{border:1px #B0C263 solid; background:#D4D885; text-align:center;}
+.tel_bg{background:#FFFFFF url(tel.jpg) no-repeat; padding-left:20px; font-size:14px; color:#FFFFFF; line-height:43px; font-weight:bold; text-align:left;}
+.main_nr{padding:10px 30px; font-size:12px; line-height:25px; color:#926D00; text-align:left;}
+.left_tel{background:url(left_tel.jpg) no-repeat; font-size:14px; font-weight:bold; color:#FFFFFF; text-align:left; padding-left:20px;}
+.left_lxwm{font-size:12px;text-align:left; color:#413300;}
+.left_lxwm td{padding:8px 5px; border-bottom:1px #999900 solid;}
+#left_bnt{width:212px;padding:0px;border:0px;margin:20px auto auto auto;}
+#left_bnt li{width:212px;padding:0px;border:0px;margin:auto;}	
+#left_bnt li a{
+	display:block;
+	width:212px;
+	height:45px;
+	background:url(bnt_1.jpg) no-repeat;
+	padding-top:3px;
+	border:0px;
+	margin:auto;
+	font-size:16px;
+	font-weight:bold;
+	color:#646F00;
+	text-decoration:none;
+}
+#left_bnt li a:hover{
+	color: #996600;
+	display:block;
+	width:212px;
+	height:45px;
+	background:url(bnt_2.jpg) no-repeat;
+}

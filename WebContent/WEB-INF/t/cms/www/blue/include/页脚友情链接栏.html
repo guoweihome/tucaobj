@@ -1,0 +1,14 @@
+
+
+<div class="frilink">
+<dl class="hotlink">
+  <dt>友情链接:</dt>
+    [@cms_friendlink_list]
+	[#list tag_list as link]
+	<dd><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</dd>
+	[/#list]
+	[/@cms_friendlink_list]
+    <dd><a href="http://www.sohu.com" target="_blank">搜狐</a></dd>
+</dl>
+<!--<hr />
+--></div>

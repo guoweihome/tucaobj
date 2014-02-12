@@ -1,0 +1,81 @@
+
+
+
+  		<div id="loginError3" class="text-center"></div>
+		 <form class="form-horizontal" id="jvFormfor" >
+		 
+		  <div class="control-group">
+		    <label class="control-label" for="username">用户名</label>
+		    <div class="controls">		    
+		      <input type="text" name="username" id="username_f" placeholder="请输入用户名"  data-rule="required;username"/>
+		    </div>
+		  </div>
+		  
+		 <div class="control-group">
+		    <label class="control-label" for="email">E-mail</label>
+		    <div class="controls">
+		      <input type="text" name="email" id="email_f" placeholder="请输入email" data-rule="required;email"/>
+		    </div>
+		 </div>
+		 
+		 <div class="control-group">
+		    <label class="control-label" for="password">验证码</label>
+		    <div class="controls">
+		      <input type="text" class="input" name="captcha" id="captcha_f"  placeholder="请输入验证码" data-rule="required"/>
+		       <img height="35px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+		    </div>
+		 </div>
+		
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit"  class="btn btn-primary" id="forgetpassBtn" data-loading-text="正在找回">邮箱找回</button>
+		    </div>
+		  </div>
+		  	 
+		</form>
+
+ <script type="text/javascript">
+   $("document").ready(function(){
+       var ajaxOptions = {
+            url:"${base}/member/forgotpwd.jspx",
+            type:'post',
+            dataType:'json',
+            timeout:10000,
+            cache:false,
+            success : function(responseJson) {
+                   if(responseJson.success){
+                         bt_alert.info("loginError3","发送成功，邮箱获取密码!");
+		                window.setTimeout('window.location.reload()',1000); 
+                  }else{
+                       bt_alert.error("loginError3",responseJson.msg);
+                  }
+            },
+		    error:function(xhr, ajaxOptions, thrownError){
+		        	bt_alert.error("loginError3","Http status: " + xhr.status + " " + xhr.statusText);
+		    }
+        };
+        
+       $("#forgetpassBtn").click(function(){
+        
+         $('#jvFormfor').validator({
+            valid: function(form){
+                 // var me = this;
+                // 提交表单之前，hold住表单，防止重复提交
+                // me.holdSubmit();
+                 $("#jvFormfor").ajaxSubmit(ajaxOptions);
+             // $.ajax({
+             //      url: "xxx.php",
+              //     data: $(form).serialize(),
+             //      type: "POST",
+             //      success: function(){
+                        // 提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
+             //             me.holdSubmit(false);
+             //      }
+            //  });
+           }
+        });       
+       });
+   });
+  // bt_alert.info("loginError2","注册成功");
+</script>
+

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>${forum.title} - ${site.name}</title>
+<meta name="keywords" content="${forum.keywords!}" />
+<meta name="description" content="${(forum.description!)?html}" /> 
+[#include "../include/common-header.html"/]
+<style type="text/css">
+a:hover{text-decoration: none;}
+#main_content,#footer{padding-top: 50px;}
+</style>
+  </head>
+  
+  <body>
+[#include "../include/社区导航.html"/]
+
+<div id="main_content">
+	<div class="container"><div class="row"><div class="span12">
+	
+	<ul class="breadcrumb">
+	  <li><a href="${base}/">${site.name}</a><span class="divider">/</span></li>
+	  <li><a href="${base}/main.jhtml">论坛板块</a><span class="divider">/</span></li>
+	  <li class="active">${forum.title}</li>
+	</ul>
+	<h1>${forum.title}
+	 [#if user??]
+    <span class="pull-right">
+    <a href="${base}/topic/v_add${forum.id!}.jspx" class="btn btn-large"><i class="icon-plus-sign"></i> 发帖</a>
+  <!--   <a href="${base}/topic/v_add${forum.id!}.jspx?category=vote" class="btn btn-large"><i class="icon-question-sign"></i> 发起投票</a> -->
+    </span> 
+    [/#if]
+    </h1>
+	<hr/>
+	
+	<!-- 分页条 -->	
+	
+	
+	<div class="panel panel-default">
+		 <div class="panel-heading">
+			<h4>普通主题</h4>
+		 </div>
+		 <div class="panel-body">
+			 <ul class="inner list-inline">
+		    	<li><span class="caps muted">主题:</span>${forum.topicTotal!}</li>
+	         	<li><span class="caps muted">贴数:</span>${forum.postTotal!}</li>
+		    </ul>		
+		 </div>
+		 
+		 <ul class="list-group">
+<!--普通主题列表_Begin-->
+[@topic_page forumId=forum.id findType=type topLevel='0' count='15' tpl='0' typeId='${typeId!}' parentTypeId='${parentTypeId!}']
+[#list tag_pagination.list as topic]
+<li class="list-group-item">
+<div class="container"><div class="row">
+
+<div class="span10">
+[#if topic.style]
+	[#if topic.styleBold]<strong>[/#if]
+	[#if topic.styleItalic]<em>[/#if]
+	<a id="link${topic.id}" class="list-group-item-heading" href="${topic.url!}" [#if topic.styleColor?? && topic.styleColor?length>0]style="color:#${topic.styleColor};"[/#if]> 
+	<h4>
+[#if moderators]
+<input type="checkbox" name="topicIds" value="${topic.id}"/>
+[/#if]${topic.title?html!}
+	[#if topic.category==100]
+		  [#if topic.replyCount gt 10]
+		  <img align="absmiddle" src="/${res}/bbs_forum/img/hot.gif" alt="热帖" />			  
+		  [#else]
+		     [#if topic.frontStatus==1]<img align="absmiddle" src="/${res}/bbs_forum/img/rtopic.jpg" alt="新帖" />
+		     [#elseif topic.frontStatus==2]<img align="absmiddle" src="/${res}/bbs_forum/img/topic.gif"/>
+		     [#elseif topic.frontStatus==3]锁[/#if]
+		  [/#if]		
+	[#else]
+	 <img align="absmiddle" src="/${res}/bbs_forum/img/votenew.gif" alt="投票" />
+	[/#if]
+	
+	[#if topic.primeLevel!=0]
+		[#if topic.primeLevel==1]<img src="/${res}/bbs_forum/img/jing1.jpg" alt="" />
+		[#elseif topic.primeLevel==2]<img src="/${res}/bbs_forum/img/jing2.jpg" alt="" />
+		[#elseif topic.primeLevel==3]<img src="/${res}/bbs_forum/img/jing3.jpg" alt="" />
+		[/#if]
+	[/#if]
+	[#if topic.moderatorReply??&&topic.moderatorReply]<img src="/${res}/bbs_forum/img/banzhu.gif"/>[/#if]
+	[#if topic.affix??&&topic.affix]<img src="/${res}/bbs_forum/img/comm.gif"/>[/#if]
+	[#if topic.styleItalic]</em>[/#if]
+	[#if topic.styleBold]</strong>[/#if]
+	</h4>
+	</a>
+[#else]
+<a id="link${topic.id}" href="${topic.url}" class="list-group-item-heading">
+<h4>${topic.title?html}
+ [#if topic.category==100]
+ [#if topic.replyCount gt 10]
+ <img align="absmiddle" src="/${res}/bbs_forum/img/hot.gif" alt="热帖" />			  
+ [#else]
+    [#if topic.frontStatus==1]<img align="absmiddle" src="/${res}/bbs_forum/img/rtopic.jpg" alt="新帖" />
+    [#elseif topic.frontStatus==2]<img align="absmiddle" src="/${res}/bbs_forum/img/topic.gif"/>
+    [#elseif topic.frontStatus==3]锁[/#if]
+ [/#if]
+ [#else]
+   <img align="absmiddle" src="/${res}/bbs_forum/img/votenew.gif" alt="投票" />
+[/#if]
+</h4>
+</a>
+[/#if]
+
+
+<div class="list-group-item-text">
+<p class="muted"> ${topic.creater.username!}发表于${topic.createTime!?string("yyyy-MM-dd HH:mm:ss")}</p>
+</div>
+
+
+</div>
+<div class="span1">
+	<h2>[@topic_vcount topicId=topic.id]${viewCount!}[/@topic_vcount]</h2>
+	<div><span class="badge">${topic.replyCount!}</span></div>
+</div>
+</div><!-- row end -->
+</div><!-- container end -->
+</li>
+[/#list]
+[/@topic_page]
+<!--普通主题列表_End-->
+</ul>
+		 
+		 <div class="panel-footer">
+		 [@topic_page forumId=forum.id findType=type topLevel='0' count='15' tpl='0'][#include "../tag/forumtopic.html"/] [/@topic_page]
+		 </div>
+	</div><!-- panel -->
+	
+	
+	</div></div></div>
+</div>
+[#include "../include/页脚.html"/]
+  </body>
+</html>

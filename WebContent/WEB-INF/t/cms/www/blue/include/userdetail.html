@@ -1,0 +1,139 @@
+<script>
+function userLoginjs(){
+     if($("#usernm").val()==null||$("#usernm").val()==""){
+        alert("账户必须输入!");
+        return;
+     }
+     
+     if($("#passwd").val()==null||$("#passwd").val()==""){
+         alert("密码必须输入!");
+        return;
+     }
+    
+     $.ajax( {
+            url : "${base}/loginsubmit.jspx",
+            type: "POST",
+            data:{
+                "username":$('#usernm').val(),
+                "password":$('#passwd').val(),
+                "cookieType":$('#cookieTy').val(),
+                "processUrl":$('#processUrl').val(),
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+
+                if(result.success){
+                    if($("#returnUrl").val()==null||$("#returnUrl").val()==""){
+	                   $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl=/">退出</a>】');
+	                 }else{
+	                   $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl='+$("#returnUrl").val()+'">退出</a>】');	       
+	                }
+	                $('#passwd').val("");
+	                 window.location.reload();
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+     
+  }
+  
+  
+  var wbox_forget=$("#wbox_forget").wBox({
+           title: "找回密码",
+           opacity:0.5,
+           iframeWH:{width:300,height:270},
+           requestType: "iframe",
+           target:"/member/forgot_pwd.jspx"
+        });
+        
+   function user_forget(){
+      wbox_forget.showBox();
+   }
+   
+   function regegoget(){
+      alert("初始密码已发到你邮箱里，请登录邮箱查看!");
+      wbox_forget.close();
+   }
+  
+  
+</script>
+    <input type="hidden" id="processUrl" name="processUrl"/>
+    <script type="text/javascript">
+       document.getElementById("processUrl").value=document.location;
+    </script>
+   [#if returnUrl?? && returnUrl?length gt 0]
+   <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+   [#else]
+ 	<input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+   [/#if]
+
+<div class="index_label">
+	个人信息<a href="#" onclick="javascript:user_regi();" style="margin-left: 10px">立即注册</a>
+</div>
+
+<div id="index_login" class="box_line">
+    [#if user??]
+      <table cellspacing="0" cellpadding="0" width="100%" border="0">
+            <tbody>
+              <tr>
+                <td width="100">
+                   <p>                       
+                <img [#if user.avatar??][#if user.avatar?contains('user/images')] src="${user.avatar!}" [#else] src="/${res}/bbs_member/img/face/${(user.avatar)!'none.gif'}" [/#if][#else] src="/${res}/bbs_member/img/face/${(user.avatar)!'none.gif'}" [/#if] width='100' height='100' title='加为好友' ></a>
+                                                 <br />积分： ${user.point!}&nbsp;&nbsp;
+                                                    <br />威望： ${user.prestige!}                                                             
+               </p>
+                </td>
+                <td width="200px" >
+                 <p>会员头衔：${user.group.name}<br />
+               会员级别： <img alt="" src="/${res}/bbs_forum/img/level/${user.group.imgPath}.gif" /> <br />
+                注册时间： ${user.registerTime?string('yyyy-MM-dd')}<br />
+                最后登录： ${user.lastLoginTime!?string('yyyy-MM-dd')}<br/>
+                精华：${user.primeCount!}<br />
+                发帖： ${user.topicCount!}<br />
+                回复： ${user.replyCount!}</p></td>                                       
+              </tr>
+                  
+                  <tr>                   
+                    <td>   <a href="${base}/qqindex.jspx" target="_blank" style="padding-top: 3px;" id="wbox_qq"><img src="/bj/img/qq_login.gif"/></a>
+                  </td>
+                                      <td><a href="${base}/sinaindex.jspx" target="_blank" style="padding-top: 3px;" id="wbox_sina"><img src="/bj/img/sina_login.png"/></a>
+                  
+                  </tr>
+                   
+            </tbody>
+          </table>
+      
+    [#else]
+       <p class="clear">
+		帐号：
+		<input name="usernm" id="usernm" type="text" size="15" class="input_text" value="${cookie_username!}"/>
+		
+	</p>
+	<p>
+		密码：
+		<input name="passwd" id="passwd" type="password" size="15" class="input_text"/>
+	</p>
+	<div id="auto_login">
+		<input type="button" value="登录" class="btn" onclick="javascript:userLoginjs();"/>
+		<select id="cookieTy" name="cookieTy">
+			<option value="4" selected="selected">不保存</option>
+			<option value="3">保存1天</option>
+			<option value="2">一个月</option>
+			<option value="1">1年</option>
+			<option value="0">永久</option>
+		</select>
+		<a href="#" id="wbox_forget" onclick="javascript:user_forget();">找回密码</a>
+    </div>
+        <table style="font-size: 12px;padding-left: 30px;"><tbody>
+        <tr><th>&nbsp;</th>
+        <td><a href="${base}/qqindex.jspx" target="_blank" style="padding-top: 3px;" id="wbox_qq"><img src="/bj/img/qq_login.gif"/></a></td>
+           <td><a href="${base}/sinaindex.jspx" target="_blank" style="padding-top: 3px;" id="wbox_sina"><img src="/bj/img/sina_login.png"/></a>       
+        </tr>
+         
+        </tbody></table>
+    
+    [/#if]
+    
+</div>

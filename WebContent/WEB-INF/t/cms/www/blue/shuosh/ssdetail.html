@@ -1,0 +1,31 @@
+
+   <div class="panel panel-default">
+	   			<div class="panel-heading">大家正在说....</div>
+	   			<div class="panel-body">
+  
+      <div id="con">
+         <input type="hidden" id="datetime" name="datetime" value="${datetime!}"/>
+         <div class="bottomcover" style="z-index: 2;"></div>
+        <ul>
+            [#list bbs as topic]
+               <li>              
+                 <div class="div_left">        				           
+                       <a href="javascript:vod(0)" onclick="javascript:apply('${topic.creater.username}')">                      
+                       <img class="media-object img-circle"  [#if topic.creater.avatar??][#if topic.creater.avatar?contains('user/images')] src="http://www.tucaobj.com/${topic.creater.avatar!}" [#else] src="/${res}/bbs_member/img/face/${(topic.creater.avatar)!'none.gif'}" [/#if][#else] src="/${res}/bbs_member/img/face/${(topic.creater.avatar)!'none.gif'}" [/#if]  title='加为好友' ></a>
+                </div>
+                
+                <div class="div_right">
+                    <h4 class="media-heading">
+                    <a href="javascript:vod(0)" onclick="javascript:apply('${topic.creater.username}')" > ${topic.creater.username}</a><span id="detail_${topic.creater.username}"></span>
+                                                   ：<a href="${site.urlWhole}${topic.firstPost.newRedirectUrl}" target='_blank'>##${topic.title!}##</a>
+                    </h4>
+                    ${topic.firstPost.subContentHtml!}
+                    <div class="twit_item_time">${topic.timeString}</div>
+                </div>                
+               </li>
+            [/#list]           
+        </ul>
+      </div>
+     </div>
+    </div>  
+

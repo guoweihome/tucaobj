@@ -1,0 +1,60 @@
+<ul class="media-list">
+[#list tag_pagination.list as post]
+[#assign creater=post.creater/] 
+<li class="media">
+	<a class="pull-left text-center" href="#" style="width: 74px;height: 64px" onclick="javascript:apply('${creater.username}')">
+	[#if creater.avatar??]
+		[#if creater.avatar?contains('user/images')]<img class="media-object img-circle" style="width: 64px;height: 54px" src="http://www.tucaobj.com/${creater.avatar!}" width="64px" height="54px">${creater.username!}</img>
+		[#else]<img class="media-object img-circle" tyle="width: 64px;height: 54px" src="/${res}/bbs_member/img/face/${(creater.avatar)!'none.gif'}" width="64px" height="54px">${creater.username!}</img>
+		[/#if]
+	[#else]
+		<img class="media-object img-circle" tyle="width: 64px;height: 54px" src="/${res}/bbs_member/img/face/${(creater.avatar)!'none.gif'}" width="64px" height="54px">${creater.username!}</img>
+	[/#if]
+	</a>
+	 <div class="media-body">
+	 	[#if post.title??]
+		<h4 class="media-heading well">${post.title?html}</h4>
+		[/#if]
+		<div class="tiptop">
+		${post.indexCount}# &nbsp;&nbsp;${creater.username!}发表于${post.createTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;
+		IP:[#if user??&&user.moderator]${post.posterIp!}[#else][#list post.posterIp?split('.') as x][#if x_index%2==0]${x}.[/#if][/#list]*.*[/#if]
+		</div>
+		<div class="content">
+			<p>${post.contentHtml}</p>
+			  [#if post_index==0]
+                	<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more">更多</span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6763551" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+<div class="pull-right">
+  [#if user??]
+          [#if moderators||user.id==creater.id]
+          <a href="${base}/post/v_edit${post.id!}.jspx">编辑</a>
+          [/#if]
+          [#if moderators]
+          [#if !post.shield]<a href="${base}/post/v_shield${post.id!}_${-1}.jspx">屏蔽[#else]<a href="${base}/post/v_shield${post.id!}_${0}.jspx">取消屏蔽[/#if]</a> 
+          [/#if][/#if]
+          
+          [/#if]
+  </div>        
+          
+		</div>
+	
+
+	</div>
+</li>
+[/#list]
+</ul>

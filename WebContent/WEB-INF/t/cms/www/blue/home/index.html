@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>吐槽笔记网 -首页</title>
+    <meta name="keywords" content="吐槽网、吐槽笔记网、吐槽地铁、吐槽黑中介、吐槽电商、吐槽" />
+    <meta name="description" content="吐槽笔记/吐槽中介、交通等民生话题" /> 
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+<script type="text/javascript">
+    function jsout(url,title,id){   
+     //alert(url);    
+      var p = {
+           url:url,
+           showcount:'0',/*是否显示分享总数,显示：'1'，不显示：'0' */
+           desc:'http://www.tucaobj.com',/*默认分享理由(可选)*/
+           summary:'',/*分享摘要(可选)*/
+           title:title,/*分享标题(可选)*/
+           site:'吐槽笔记网',/*分享来源 如：腾讯网(可选)*/
+           pics:'', /*分享图片的路径(可选)*/
+           style:'203',
+           width:25,
+           height:15
+      };
+      var s = [];
+      for(var i in p){
+            s.push(i + '=' + encodeURIComponent(p[i]||''));
+      }
+           
+     $("#span_id_"+id).html(['<a version="1.0"  href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?',s.join('&'),'" target="_blank"><img src="/bj/img/open_share_qq.png"/></a>'].join(''));
+    }
+    
+    function qqshare(url,title,id){
+        $("#span_qqshare_"+id).html('<a  href="http://share.v.t.qq.com/index.php?c=share&a=index&url='+url+'&appkey=801412468&title='+encodeURIComponent(title)+'" target="_blank"><img src="/bj/img/share_icon_qq.png"/></a>');      
+    }
+    
+    function sinashare(url,title,id){              
+       $("#span_sinashare_"+id).html('<a href="http://v.t.sina.com.cn/share/share.php?url='+encodeURIComponent(url)+'&title='+encodeURIComponent(title+'  吐槽笔记网http://www.tucaobj.com')+'&appkey=2294391872&pic" target="_blank"><img src="/bj/img/sina_share.png" alt="分享到新浪微博" /></a>');         
+    }
+   
+</script>
+[#include "../include/common-header.html"/]	
+<style type="text/css">
+a:hover{text-decoration: none;}
+#main_content,#footer{padding-top: 50px;}
+</style>
+  </head>
+  <body>
+<script src="${resSys}/login.js"></script>
+<div>
+<div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+	<div class="container">
+	   <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="${base}/">吐槽笔记</a>
+	
+	  <!-- Collect the nav links, forms, and other content for toggling -->
+	  <div class="nav-collapse collapse">
+	    <ul class="nav">
+	      <li class="active"><a href="${base}/">首页</a></li>
+	      <li><a href="${base}/shuosh.jhtml" target="_blank">最近的吐槽</a></li>
+	      <li><a href="${base}/main.jhtml" target="_blank">社区</a></li>
+	       <li><a id="userinfo" href="#" che=[#if  user??] "${user.username}" [/#if]  >会员中心</a></li>				  
+	    </ul>
+	    <ul class="nav pull-right">
+	      <li><a href="#"  id="tucaoinfo" che=[#if  user??] "${user.username}" [/#if]>我要吐槽</a></li>
+	      [#if  user??]
+	      <li><a href="#">您好，${user.username}</a></li>
+	      <li><a href="${base}/logout.jspx?returnUrl=${returnUrl!}">退出</a></li>
+	      [#else]
+	      <li>	       
+	       <a id="loginUserModel" >登录</a>	      
+	      </li>
+	      <li>
+	         <a id="regeUserModel" >注册</a>
+	       </li>
+	      [/#if]
+	    </ul>
+	  </div><!-- /.navbar-collapse -->
+	</div>
+	</div>
+</nav>
+</div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">内容</h3>
+  </div>
+  
+  <div class="modal-body">
+    
+ </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+ 
+</div>
+
+
+
+<div id="main_content">
+	<div class="container">
+	   <div class="row">
+	   <!-- left panel -->
+	   	<div class="span9" >
+	   	[#list bbsContentList as bbs]
+	   	<div class="well">
+	   	    <div class='hot_feed_top_tit'>
+				<span class='hot_tit_top'>
+				  <span class='txt_top'><strong>TOP ${bbs.numShow}</strong></span> 
+				</span>
+			</div>
+	   		<ul class="media-list">
+			  <li class="media">
+			    <a class="pull-left" href="javascript:vod(0)" onclick="javascript:apply('${bbs.creater.username}')">
+[#if bbs.creater.avatar?contains('user')]<img class="media-object img-circle" style="width:64px;height:64px" src="http://www.tucaobj.com/${bbs.creater.avatar}" />
+[#elseif bbs.creater.avatar?? && bbs.creater.avatar?length>0]<img class="media-object img-circle" style="width:64px;height:64px" src="${resSys}/bbs_member/img/face/${bbs.creater.avatar}" />
+[#else]<img class="media-object img-circle" style="width:64px;height:64px" src="${resSys}/bbs_member/img/face/none.gif" />
+[/#if]
+                 <span id="detail_${bbs.creater.username}" style="display:block;width:100%;text-align:center;">${bbs.creater.username}</span>
+			    </a>
+			   
+			    <div class="media-body">
+			      <h4 class="media-heading">
+			        <a href="${base}/${bbs.firstPost.newRedirectUrl}" target='_blank'>${bbs.title}</a>
+			      </h4>
+			      <p>${bbs.firstPost.subContentHtml}</p>
+			      
+			      <div >
+			       <span class="pull-left">
+			          <ul class="inner list-inline muted">
+			            <li><a href='javascript:vod(0)' rel='nofollow'>${bbs.createString}</a></li>
+			            <li>来自<a href='javascript:vod(0)' rel='nofollow'>${bbs.comefrom}</a></li>
+			           </ul>
+			       </span>
+			       <span class="pull-right">
+			          <ul class="inner list-inline muted">
+			    	    
+			    	     <li>浏览(${bbs.viewCount})</li>
+			    	    <!--  <span class="badge">&nbsp;${bbs.replyCount}&nbsp; -->
+			    	     <li><a href='${base}/${bbs.firstPost.newRedirectUrl}' target='_blank'>回复(${bbs.replyCount})</a></li>
+			    	     <li><span id='span_id_${bbs.id}'></span>
+			    	         <script type='text/javascript'>
+			    	            jsout('${site.urlWhole}${bbs.firstPost.newRedirectUrl}','${bbs.title}','${bbs.id}')
+			    	         </script>
+			    	     </li>
+			    	     <li><span id='span_qqshare_${bbs.id}'></span>
+			    	         <script type='text/javascript'>
+			    	            qqshare('${site.urlWhole}${bbs.firstPost.newRedirectUrl}','${bbs.title}','${bbs.id}')
+			    	         </script>
+			    	     </li>
+			    	     <li><span id='span_sinashare_${bbs.id}'></span>
+			    	         <script type='text/javascript'>
+			    	            sinashare('${site.urlWhole}${bbs.firstPost.newRedirectUrl}','${bbs.title}','${bbs.id}')
+			    	         </script>
+			    	     </li>
+			          </ul>
+			       </span>			     
+			       </div>
+			    </div>
+			    
+			  </li>
+			</ul>
+		</div>
+	   	[/#list]
+	   	</div>
+	   	<!-- right panel -->
+	   	<div class="span3" ">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">快速通道</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					[#list bbsfromList as bbsfrom]
+	   					<li><a href="${base}/${bbsfrom.path}/index.jhtml" class="pure-button info-bg pure-button-small">${bbsfrom.title}</a></li>
+	   					[/#list]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">活跃大神</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					 [#list bbsUserList as bbsuser]
+			             <li>
+				           <a href="javascript:vod(0)" onclick="javascript:apply('${bbsuser.username}')">
+				               <img class="media-object img-circle" style="width:40px;height:40px" [#if bbsuser.avatar??][#if bbsuser.avatar?contains('user/images')] src="http://www.tucaobj.com/${bbsuser.avatar!}" [#else] src="${res}/bbs_member/img/face/${(bbsuser.avatar)!'none.gif'}" [/#if][#else] src="/${res}/bbs_member/img/face/${(bbsuser.avatar)!'none.gif'}" [/#if]  title='加为好友' />
+				               <span style="display:block;width:100%;text-align:center;font-size:1px">${bbsuser.username}</span>
+				           </a>
+			             </li>
+	                    [/#list]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   		<div class="panel panel-default">
+			  <div class="panel-heading">手机扫一扫</div>
+			  <div class="panel-body">
+		    	<a href="#" id="qcImg" class="thumbnail" data-toggle="popover" data-placement="left">
+		    	<img src="${resSys}/img/qrcode.png"/>
+		    	</a>
+		    	<h5>快上手机吐槽笔记网吧</h5>
+		    	<p>手机也能上吐槽笔记网了，快打开微信扫一扫，吐槽吐槽吧！</p>
+		    	<div id="show_qc_content" style="display: none;"><img src='${resSys}/img/show_qr.png' style="width:258px;height:376px" /></div>
+			  </div>
+			</div>
+			<div class="panel panel-default">
+	   			<div class="panel-heading">新浪关注</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">	   					
+			             <li>
+			                <div style="float:left;margin-left:5px;margin-right:5px">
+			                 <div style="margin-bottom:5px;margin-top:5px;font-size:12px;width:75px">鼠标点击新动态图标来关注我最新动态</div>
+			                 <div><wb:follow-button uid="3763714785" type="red_1" ></wb:follow-button></div>			   
+			             </div>	
+				           <div style="float:right;">
+			                  <img src="/bj/img/weibotp.jpg" style="width:130px;height:120px" />
+			              </div>
+			           
+			             </li>	                   
+	   				</ul>
+	   			</div>
+	   		</div>
+	   	</div>
+	   </div>
+	</div>
+</div>
+
+[#include "../include/页脚.html"/]
+</div>
+  </body>
+</html>

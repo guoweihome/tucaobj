@@ -1,0 +1,150 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="/r/cms/jquery.js"></script>
+		<style>
+     .rfm {
+	      margin: 0 auto;
+ 	      border-bottom: 1px dotted #CDCDCD;
+      }
+      
+      .mbw {
+          margin-bottom: 20px !important;
+}
+
+.pnc {
+border-color: #235994;
+background-color: #06C;
+background-position: 0 -48px;
+color: #FFF !important;
+}
+
+.bw0 {
+background: transparent;
+}
+
+.userlogin{
+font: 12px/1.5 Tahoma,'Microsoft Yahei','Simsun';
+color: #444;
+}
+</style>
+<script>
+  function user_find(){
+   //alert("ss");
+      //表单验证
+    $("#jvForm2").validate({
+        onkeyup  : false,
+        onclick  : true,
+        onfocusout : false,
+            invalidHandler : function(){
+                return false;
+            },
+            submitHandler : function(){
+                //表单的处理
+          
+           $.ajax( {
+            url : "${base}/member/forgotpwd.jspx",
+            type: "post",
+            data:{
+                "username":$('#username_f').val(),
+                "email":$('#email_f').val(),
+                "captcha":$('#captcha_f').val()
+            },
+            dataType:"json",
+            success:function (result) {
+
+                if(result.success){                    
+                    window.parent.regegoget();
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+     
+                return false;//阻止表单提交
+           }
+        });
+      //alert("ss");
+  }
+</script>
+	</head>
+	<body style="width:270px; height:250px;">
+           <form id="jvForm2">
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>用户名：
+								</label>
+							</th>
+							<td>
+                             <input type="text" id="username_f" name="username" autocomplete="off" class="input" vld="{required:true,rangelength:[3,20],username:true}"/>		
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>E-mail：
+								</label>
+							</th>
+							<td>
+                             <input type="text" id="email_f" name="email"  class="input required email" />							
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								<label class="userlogin">
+									<span style="color:red">*</span>验证码：
+								</label>
+							</th>
+							<td>
+                              <div>   <input type="text" class="input" name="captcha" id="captcha_f" vld="{required:true}"/>
+                                      <img height="35px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+                              </div>							
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			
+			<div class="rfm  bw0">
+				<table width="100%">
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								&nbsp;
+							</th>
+							<td>
+								<button class="pnc" type="submit" name="loginsubmit2" onclick="javascript:user_find();">
+									<strong class="userlogin">邮箱找回</strong>
+								</button>
+							</td>
+							<td>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+	</form>	
+	</body>
+
+</html>

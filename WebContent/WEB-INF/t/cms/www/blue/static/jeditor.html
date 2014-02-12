@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>${site.name} -json在线编辑器</title>
+    <meta name="keywords" content="JSON在线编辑器，jquery json在线编辑器，jquery开源json在线编辑器,json中文在线编辑器" />
+    <meta name="description" content="JSON在线编辑器,查看，编辑，美化json，格式化json,自动检查json格式错误，自动检测json格式错误" /> 
+   	<link href="${resSys}/static/online_json/app.css" rel="stylesheet" type="text/css">
+    <link href="${resSys}/static/online_json/jsoneditor/css/jsoneditor.css" rel="stylesheet" type="text/css">
+    <link href="${resSys}/static/online_json/jsoneditor/css/menu.css" rel="stylesheet" type="text/css">
+    <link href="${resSys}/static/online_json/jsoneditor/css/searchbox.css" rel="stylesheet" type="text/css">
+    <link href="${resSys}/static/online_json/jsoneditor/css/contextmenu.css" rel="stylesheet" type="text/css">
+   	<script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/jsoneditor.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/treeeditor.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/texteditor.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/node.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/appendnode.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/contextmenu.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/history.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/searchbox.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/highlighter.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/util.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/jsoneditor/js/module.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/queryparams.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/ajax.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/fileretriever.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/notify.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/splitter.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/app.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/lib/jsonlint/jsonlint.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/lib/ace/ace.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/lib/ace/mode-json.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/lib/ace/theme-textmate.js"></script>
+    <script type="text/javascript" src="${resSys}/static/online_json/lib/ace/theme-jsoneditor.js"></script>
+
+    <style type="text/css">
+        div.convert-right {
+            background: url('${resSys}/static/online_json/jsoneditor/css/img/jsoneditor-icons.png') -0 -48px;
+        }
+        div.convert-left {
+            background: url('${resSys}/static/online_json/jsoneditor/css/img/jsoneditor-icons.png') -24px -48px;
+        }
+    </style>
+  </head>
+  
+  <body>
+   <div id="header" >
+    <a href="http://www.tucaobj.com" class="header" target="_blank">
+        <img alt="json在线编辑器-tucaobj.com" title="json在线编辑器-tucaobj.com" src="/bj/img/logo.png" id="logo">
+    </a>
+
+    <div id="menu">
+        <ul>
+            <li>
+                <a id="clear" title="Clear contents">清空</a>
+            </li>
+            <li>
+                <a id="open" title="Open file from disk">
+                    打开
+                    <span id="openMenuButton" title="Open file from disk or url">
+                    &#x25BC;
+                    </span>
+                </a>
+                <ul id="openMenu">
+                    <li>
+                        <a id="menuOpenFile" title="Open file from disk">打开文件</a>
+                    </li>
+                    <li>
+                        <a id="menuOpenUrl" title="Open file from url">打开URL</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a id="save" title="Save file to disk">保存</a>
+            </li>
+        </ul>
+    </div>
+
+  
+</div>
+
+<div id="auto">
+    <div id="contents">
+        <div id="codeEditor"></div>
+
+        <div id="splitter">
+            <div id="buttons">
+                <div>
+                    <button id="toTree" class="convert" title="拷贝代码到树">
+                        <div class="convert-right"></div>
+                    </button>
+                </div>
+                <div>
+                    <button id="toCode" class="convert" title="拷贝数到编辑器">
+                        <div class="convert-left"></div>
+                    </button>
+                </div>
+            </div>
+            <div id="drag">
+            </div>
+        </div>
+
+        <div id="treeEditor"></div>
+
+        <script type="text/javascript">
+            app.load();
+            app.resize();
+        </script>
+      
+    </div>
+</div>
+
+<div id="footer">
+    <div id="footer-inner">
+       Copyright &copy; 2013-2013 www.tucaobj.com, All Rights Reserved <a href="http://www.miitbeian.gov.cn/" target="_blank">豫ICP备13015285号</a><script src="http://s17.cnzz.com/stat.php?id=5517918&web_id=5517918&show=pic" language="JavaScript"></script>
+    </div>
+</div>
+
+<script type="text/javascript">
+    app.resize();
+</script>
+   
+  </body>
+</html>

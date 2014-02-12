@@ -1,0 +1,223 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="/r/cms/jquery.js"></script>
+		<style>
+     .rfm {
+	      margin: 0 auto;
+ 	      border-bottom: 1px dotted #CDCDCD;
+      }
+      
+      .mbw {
+          margin-bottom: 20px !important;
+}
+
+.pnc {
+border-color: #235994;
+background-color: #06C;
+background-position: 0 -48px;
+color: #FFF !important;
+}
+
+.bw0 {
+background: transparent;
+}
+
+.userlogin{
+font: 12px/1.5 Tahoma,'Microsoft Yahei','Simsun';
+color: #444;
+}
+</style>
+<script>
+  function user_loginbind(){
+      $("#jvForm").validate({
+        onkeyup  : false,
+        onclick  : false,
+        onfocusout : false,
+            invalidHandler : function(){
+                return false;
+            },
+            submitHandler : function(){
+                //表单的处理
+               
+           $.ajax( {
+            url : "${base}/user_loginbind.jspx",
+            type: "POST",
+            data:{
+                "username":$('#username').val(),
+                "password":$('#password').val(),
+                "captcha":$('#captcha').val(),
+                "processUrl":$('#processUrl').val(),
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+
+                if(result.success){
+                     window.parent.document.getElementById("returnvalue").value=result.msg;
+                    window.parent.user_parentloginbind();
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+                  
+                return false;//阻止表单提交
+           }
+        });
+  }
+  
+  function user_loginrigth(){
+       //  alert("sdsd");
+      //表单验证 
+           $.ajax( {
+            url : "${base}/user_loginnobind.jspx",
+            type: "POST",
+            data:{
+                "processUrl":"",
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+               if(result.success){
+                     window.parent.document.getElementById("returnvalue").value=result.msg;
+                    window.parent.user_parentuserloginrigth();
+                }else{
+                    alert(result.msg);
+                }      
+            }
+        });
+                  
+        
+     
+  }
+  
+  function login_findpwd(){
+     window.parent.login_findpwd();
+  }
+  
+  function login_register(){
+     window.parent.login_register();
+  }
+</script>
+	</head>
+	<body style="width:300px; height:270px;">
+           <form id="jvForm">
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>用户名：
+								</label>
+							</th>
+							<td>
+                             <input type="text" id="username" name="username" value="${cookie_username!}" autocomplete="off" class="input" vld="{required:true,rangelength:[3,20],username:true}"/>		
+                            </td>	
+                            <td class="userlogin">
+								<a href="#" onclick="javascript:login_register();">注册</a>
+							</td>						
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>密　码：
+								</label>
+							</th>
+							<td>
+								<input type="password" name="password" value="${cookie_password!}" id="password" class="input required" />
+							</td>
+							<td class="userlogin">
+								<a href="#"  onclick="javascript:login_findpwd();" title="找回密码">找回密码</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+						
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								<label class="userlogin">
+									<span style="color:red">*</span>验证码：
+								</label>
+							</th>
+							<td>
+                              
+                                <input type="text" class="input" name="captcha" id="captcha" vld="{required:true}"/>                                  
+                              						
+                            </td>	
+                            <td>                             
+                                 <img height="25px" width="30px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>                             					
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			
+           
+               [#if returnUrl?? && returnUrl?length gt 0]
+              <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+                [#else]
+                   <input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+              
+              [/#if]
+
+			<div class="rfm  bw0">
+				<table width="100%">
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								&nbsp;
+							</th>
+							<td>
+								<button class="pnc" type="submit" name="loginsubmit" onclick="javascript:user_loginbind();">
+									<strong class="userlogin">QQ与账户绑定</strong>
+								</button>
+								
+								<button class="pnc" type="button" name="loginsubmit2" onclick="javascript:user_loginrigth();">
+									<strong class="userlogin">不绑定</strong>
+								</button>
+							</td>
+							<td>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+            <div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								<label class="userlogin">
+									<span style="color:red">说明：</span>
+								</label>
+							</th>
+							<td>
+                              <div class="userlogin">   
+                                QQ不与账户绑定,系统会自动生成一个默认账户!
+                              </div>							
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+	</form>	
+	</body>
+
+</html>

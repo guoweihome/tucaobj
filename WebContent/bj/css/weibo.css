@@ -1,0 +1,154 @@
+
+.container .mc_left #index_action{border-top: #80a1c1 solid 1px;padding: 3px 0 13px 0;margin-top: 5px;}
+
+.hot_feed_top_tit {
+	position:relative;
+	width:610px;
+	margin:0px 0px 1px 0px;
+}
+
+.hot_tit_top {
+	display:block;
+	height:18px;
+	background:url(/bj/img/bg_tit_fill.jpg) repeat-x;
+	overflow:hidden;
+}
+
+.hot_tit_top .txt_top {
+	display:inline-block;
+	float:left;
+	margin-left:30px;
+	width:73px;
+	height:16px;
+	background:#fafafa;
+	color:#f97674;
+	font-size:18px;
+	text-align:center;
+	font-family:Arial;
+}
+.WB_feed_type {
+background: #fafafa;
+}
+
+.WB_feed .WB_feed_datail {
+border-bottom-width: 1px;
+border-bottom-style: solid;
+padding: 0 0 11px;
+overflow: hidden;
+}
+
+.WB_feed .WB_face {
+float: left;
+width: 50px;
+height: 50px;
+border-radius: 3px;
+}
+
+.W_face_radius {
+border-radius: 2px;
+}
+
+.WB_feed .WB_name {
+font-size: 14px;
+font-weight: bold;
+line-height: 16px;
+}
+
+.WB_feed .WB_text {
+font-size: 14px;
+line-height: 23px;
+padding: 4px 0 4px;
+}
+
+.WB_feed .WB_media_list {
+padding: 0 0 15px;
+_zoom: 1;
+}
+
+.WB_feed .chePicMin {
+display: inline-block;
+vertical-align: top;
+min-width: 60px;
+text-align: center;
+_width: 60px;
+}
+
+.WB_feed .WB_media_expand {
+border-width: 1px;
+border-style: solid;
+padding: 10px 20px 10px;
+margin: 5px 0 15px;
+border-radius: 3px;
+}
+
+.WB_feed .WB_media_expand {
+border-width: 1px;
+border-style: solid;
+padding: 10px 20px 10px;
+margin: 5px 0 15px;
+border-radius: 3px;
+}
+
+.clearfix {
+display: block;
+}
+
+
+.WB_feed .W_loading {
+margin: 2px 0 17px;
+text-align: center;
+padding: 20px 0 10px;
+display:none;
+}
+.WB_feed .W_loading span {
+   padding: 0 0 0 18px;
+}
+
+.W_loading span {
+  background: url("/bj/img/loading.gif") no-repeat 0 1px;
+  padding: 0 0 0 20px;
+  line-height: 18px;
+  height: 18px;
+  display: inline-block;
+}
+
+.WB_feed .WB_media_list li {
+display: inline;
+margin: 0 3px 0 0;
+vertical-align: top;
+margin-right: 6px\9;
+}
+li {
+list-style: none;
+}
+
+.WB_feed .WB_media_list {
+padding: 0 0 15px;
+_zoom: 1;
+}
+
+.WB_feed .WB_func .WB_handle {
+float: right;
+}
+
+
+.S_link1, .S_func1:hover, .SW_fun:hover .S_func1, .SW_fun2:hover .S_func3, .SW_fun2:hover .S_func4 {
+color: #14a0cd;
+}
+
+
+
+.WB_feed .WB_func .WB_handle .S_txt3 {
+margin: 0 6px 0 8px;
+vertical-align: 1px;
+}
+.S_txt3 {
+color: #aeaeae;
+}
+
+.WB_feed .WB_from .WB_time {
+margin: 0 7px 0 0;
+}
+.WB_feed .WB_detail {
+margin-left: 65px;
+}

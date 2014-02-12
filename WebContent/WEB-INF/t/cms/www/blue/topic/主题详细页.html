@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>${(topic.title!)?html} - ${site.name}</title>
+<meta name="keywords" content="${(topic.title!)?html}" />
+<meta name="description" content="${(topic.title!)?html}" /> 
+[#include "../include/common-headersimple.html"/]
+<style type="text/css">
+a:hover{text-decoration: none;}
+#main_content,#footer{padding-top: 50px;}
+</style>
+<script type="text/javascript">
+ 
+ function checkContent(){
+  if($("#userinfo").attr("che")==null||$("#userinfo").attr("che")==""){
+      bootbox.alert("登录后才可以回复!");
+     return false;
+  }
+  if($("#atc_content").val()==""){
+      bootbox.alert("内容不能为空");
+     return false;
+  }
+  
+  
+  return true;
+}
+</script>
+  </head>
+  
+  <body>
+[#include "../include/社区导航.html"/]
+
+
+<div id="main_content">
+	<div class="container"><div class="row"><div class="span12">
+	
+	<ul class="breadcrumb">
+	  <li><a href="${base}/">${site.name}</a><span class="divider">/</span></li>
+	  <li><a href="${base}/main.jhtml">论坛板块</a><span class="divider">/</span></li>
+	  <li><a href="${forum.url}">${forum.title}</a><span class="divider">/</span></li>
+	  <li class="active">${topic.title?html}</li>
+	</ul>
+
+	[@post_page topicId=topic.id count='10' tpl='1'/]
+	<hr/>
+	
+	<div class="span12" style="padding-bottom: 10px">
+		<form id="jvForm" action="${base}/post/o_save.jspx" method="post" enctype="multipart/form-data" validate="true" onsubmit="return checkContent();">
+			<input name="postTypeId" value="${postTypeId!}" type="hidden"/>
+			<input type="hidden" name="topicId" value="${topic.id}" />
+			
+			<div class="span2">
+				<input type="checkbox" checked="checked" name="atc_usesign" value="1" /> 使用签名 <br />
+	            <input type="checkbox" checked="checked" name="atc_convert" value="1" /> Code自动转换 <br />
+	            <input disabled="disabled" type="checkbox" name="atc_anonymous" value="1" /> 匿名帖 <br />
+	            <input disabled="disabled" type="checkbox" name="atc_hide" value="1" /> 隐藏此帖 <br />
+	            <input disabled="disabled" type="checkbox" name="atc_hideatt" value="1" /> 隐藏附件
+			</div>
+			<div class="span9">
+				<textarea id="atc_content" rows="8" style="width: 96%" name="content"></textarea>
+	            <div class="fr gray" id="atc_content_warn" style="padding-right: 15px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px">限 50,000 字符</div>
+	            <div class="text-center">
+	               <input class="btn" type="submit" name="Submit" value=" 提 交 " />
+	               
+	            </div>
+			</div>
+	    </form>
+	</div>
+	
+	
+	</div></div>
+</div><!-- main_content -->
+[#include "../include/页脚.html"/]
+  </body>
+</html>

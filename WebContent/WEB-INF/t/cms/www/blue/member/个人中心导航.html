@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+	<div class="container">
+	   <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="${base}/">吐槽笔记</a>
+	  <!-- Collect the nav links, forms, and other content for toggling -->
+	  <div class="nav-collapse collapse">
+	    <ul class="nav">
+	      <li><a href="${base}/" target="_blank">首页</a></li>
+	      <li><a href="${base}/shuosh.jhtml" target="_blank">最近的吐槽</a></li>
+	      <li><a href="${base}/main.jhtml">社区</a></li>
+	       <li><a id="userinfo" href="#" che=[#if  user??] "${user.username}" [/#if]  >会员中心</a></li>				  
+	      
+	    </ul>
+	    <ul class="nav pull-right">
+	      <li><a href="#"  id="tucaoinfo" che=[#if  user??] "${user.username}" [/#if]>我要吐槽</a></li>	      
+	      [#if  user??]
+	      <li><a href="#">您好，${user.username}</a></li>
+	     <!--   <li><a href="${base}/logout.jspx?returnUrl=${returnUrl!}">退出</a></li>-->
+	      <li><a href="${base}/logout.jspx?returnUrl=/">退出</a></li>
+	      [#else]
+	       <li>	       
+	       <a id="loginUserModel" >登录</a>	      
+	      </li>
+	      <li>
+	         <a id="regeUserModel" >注册</a>
+	       </li>
+	      [/#if]
+	    </ul>
+	  </div><!-- /.navbar-collapse -->
+	</div>
+	</div>
+</nav>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">内容</h3>
+  </div>
+  
+  <div class="modal-body">
+    
+ </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+ 
+</div>

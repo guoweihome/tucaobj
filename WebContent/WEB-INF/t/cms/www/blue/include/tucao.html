@@ -1,0 +1,81 @@
+
+
+
+  		<div id="loginError6" class="text-center"></div>
+		 <form class="form-horizontal" id="jvForm">
+		 
+		  <div class="control-group">
+		    <label class="control-label" for="title">标题</label>
+		    <div class="controls">
+		     <input type="text" name="title" id="title" placeholder="请输入标题"  maxlength="100" size="50" data-rule="required"/>		      	
+		    </div>
+		    
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="title">板块</label>
+		   
+		    <div class="controls">
+		      <select name="postTypeId" id="postTypeId">
+            		[#list postTypes as type]
+            		<option value="${type.id!}">${type.typeName!}</option>
+            		[/#list]
+                </select>
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="_editor_textarea">内容</label>
+		    <div class="controls">
+		      <textarea id="content" rows="6" cols="100"  placeholder="请输入内容"  name="content"  data-rule="required"></textarea>
+		              		     
+		    </div>
+		     <div class="controls">
+		             限 300 字符
+		     </div>
+		  
+		  </div>
+		
+		   <input type="hidden" name="forumId" id="forumId" value="${forumId!}"/>
+		    <div class="control-group">
+		    <div class="controls">
+		      <button type="submit" class="btn btn-primary" id="tucaoBtn" data-loading-text="正在提交" >提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+		    </div>
+		  </div>
+		  <hr/>
+		   	 
+		</form>
+
+ <script type="text/javascript">
+   $("document").ready(function(){
+    
+        
+       $("#tucaoBtn").click(function(){       
+         $('#jvForm').off('valid.form');
+         $('#jvForm').on('valid.form', function(e, form){ 
+              if($("#content").val()!=""&&$("#content").length>300){
+                        bt_alert.info("loginError6","内容不能大于300字");                    
+                         return false;
+               }
+           $.ajax({
+             url:"/tucaosubmit.jhtml",
+            type:'post',
+            dataType:'json',
+            data:$("#jvForm").serializeArray(),
+            success : function(responseJson) {
+                  if(responseJson.success){
+                       bt_alert.info("loginError6","吐槽成功");
+                      
+		               window.setTimeout('window.location.href="/shuosh.jhtml"',1000); 
+                  }else{
+                       bt_alert.error("loginError6",responseJson.msg);
+                  }
+            },
+		    error:function(xhr, ajaxOptions, thrownError){
+		        	bt_alert.error("loginError6","Http status: " + xhr.status + " " + xhr.statusText);
+		    }
+           });                         
+                 //$("#jvForm").ajaxSubmit(ajaxOptions);
+         });                  
+       });
+   });
+</script>
+

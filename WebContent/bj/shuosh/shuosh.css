@@ -1,0 +1,72 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+ul, li {
+	list-style-type: none;
+}
+
+#box_title{
+	 font-weight: bold;color: #444;margin-bottom: 2px;padding-bottom: 5px;font-size: 14px;
+	 margin-top: 20px;
+	 }
+#con {
+	width: 95%;
+	height: 1010px;
+	margin: 0px auto;
+	position: relative;
+	border-top: 1px solid #d6d6d6;
+	background-color: #FFF;
+	overflow: hidden;
+}
+#con .bottomcover {
+	position: absolute;
+	bottom: 0;
+	
+	height: 35px;
+	width: 95%;
+	_background: none;
+	pointer-events: none;
+}
+img {
+	border: none;
+}
+#con ul {
+	position: relative;
+	margin: 0px 10px 0px 10px;
+	top: 0;
+	left: 0;
+	padding: 0;
+}
+#con ul li {
+	width: 100%;
+	border-top: 1px dotted #d6d6d6;
+	padding: 10px 0;
+	_padding: 8px 0;
+	overflow: hidden;
+	line-height: 1.5;
+}
+#con ul li .div_left {
+	float: left;
+	width: 10%;
+	/*border: 1px solid*/;
+}
+#con ul li .div_right {
+	float: right;
+	width: 90%;
+}
+#con ul li .div_right a {
+	color: #6EAFD5;
+	padding: 0px;
+}
+#con ul li .div_right .twit_item_time {
+	color: #999;
+	padding: 0px;
+}
+
+ .W_loading {
+margin: 2px 0 17px;
+text-align: center;
+padding: 20px 0 10px;
+display:none;
+}

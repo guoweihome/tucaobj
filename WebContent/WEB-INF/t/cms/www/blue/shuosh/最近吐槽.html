@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wb=“http://open.weibo.com/wb”>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>${site.name}_最近的吐槽</title>
+		<meta name="keywords" content="吐槽网、吐槽笔记网、吐槽地铁、吐槽黑中介、吐槽电商、吐槽" />
+		<meta name="description" content="吐槽笔记/吐槽中介、交通等民生话题" />
+	    <link type="text/css" rel="stylesheet" href="/bj/shuosh/shuosh.css" />
+		[#include "../include/common-header.html"/]	
+	     <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+	
+
+ 
+    <!--jQuery动画暂停插件-->
+    <script type="text/javascript" src="/bj/shuosh/jquery.pause.min.js"></script>
+    <!--滚动效果js-->
+    <script type="text/javascript" src="/bj/shuosh/weiboscroll.js"></script>
+		
+    <script type="text/javascript">
+function  ain_func(){
+	var $ul = $("#con ul");
+	 var liFirstHeight;
+	 
+	 $.ajax( {
+        url : "${base}/ajaxshuosh.jhtml",
+        type: "POST",
+        data:{
+         "datetime":$("#datetime").val(),
+       },
+       dataType:"json",
+     
+      success:function (response) {
+          // alert(response.nums);
+           if(response.nums>0){
+               $("#datetime").val(response.datetime);
+                                
+               $(response.strs).prependTo($ul);
+                var len=$("#con ul li").length;
+               
+                if(len>5){
+                   for(var i=len-1;i>=5;i--){
+                     $("#con ul li").eq(i).remove();
+                   }
+                }      
+                 liFirstHeight = $ul.find("li:first").height();//刚插入的li的高度
+                $ul.css({ top: "-" + liFirstHeight - 20 + "px" });//利用css的top属性将刚插入的li隐藏在列表上方  因li的上下padding:10px所以要-20          
+               //alert($("#con ul li").length);
+            } else{
+               //动画完成时
+                $ul.find("li:last").prependTo($ul);//将ul的最后一个剪切li插入为ul的第一个li
+                liFirstHeight = $ul.find("li:first").height();//刚插入的li的高度
+                $ul.css({ top: "-" + liFirstHeight - 20 + "px" });//利用css的top属性将刚插入的li隐藏在列表上方  因li的上下padding:10px所以要-20	
+            }                 
+      }
+     });    
+}
+
+
+</script>
+<style type="text/css">
+a:hover{text-decoration: none;}
+#main_content,#footer{padding-top: 50px;}
+</style>
+</head>
+  <body>
+  <div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+	<div class="container">
+	   <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="${base}/">吐槽笔记</a>
+	
+	  <!-- Collect the nav links, forms, and other content for toggling -->
+	  <div class="nav-collapse collapse">
+	    <ul class="nav">
+	      <li ><a href="${base}/" target="_blank">首页</a></li>
+	      <li class="active"><a href="${base}/shuosh.jhtml" >最近的吐槽</a></li>
+	      <li><a href="${base}/main.jhtml" target="_blank">社区</a></li>
+	       <li><a id="userinfo" href="#" che=[#if  user??] "${user.username}" [/#if]  >会员中心</a></li>				  
+	     
+	    </ul>
+	    <ul class="nav pull-right">
+	      <li><a href="#"  id="tucaoinfo" che=[#if  user??] "${user.username}" [/#if]>我要吐槽</a></li>
+	      
+	      [#if  user??]
+	      <li><a href="#">您好，${user.username}</a></li>
+	      <li><a href="${base}/logout.jspx?returnUrl=${returnUrl!}">退出</a></li>
+	      [#else]
+	      <li>	       
+	       <a id="loginUserModel" >登录</a>	      
+	      </li>
+	      <li>
+	         <a id="regeUserModel" >注册</a>
+	       </li>
+	      [/#if]
+	    </ul>
+	  </div><!-- /.navbar-collapse -->
+	</div>
+	</div>
+</nav>
+
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">内容</h3>
+  </div>
+  
+  <div class="modal-body">
+    
+ </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+ 
+</div>
+
+
+
+<div id="main_content">
+	<div class="container">
+	   <div class="row">
+	   <!-- left panel -->
+	   	<div  class="span9" >	   
+		  [#include "ssdetail.html"/]
+	   	</div>
+	   	
+	   	<!-- right panel -->
+	   	<div  class="span3" >
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">快速通道</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					[#list bbsfromList as bbsfrom]
+	   					<li><a href="${base}/${bbsfrom.path}/index.jhtml" class="pure-button info-bg pure-button-small">${bbsfrom.title}</a></li>
+	   					[/#list]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">活跃大神</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					 [#list bbsUserList as bbsuser]
+			             <li>
+				           <a href="javascript:vod(0)" onclick="javascript:apply('${bbsuser.username}')">
+				               <img class="media-object img-circle" style="width:40px;height:40px" [#if bbsuser.avatar??][#if bbsuser.avatar?contains('user/images')] src="http://www.tucaobj.com/${bbsuser.avatar!}" [#else] src="${res}/bbs_member/img/face/${(bbsuser.avatar)!'none.gif'}" [/#if][#else] src="/${res}/bbs_member/img/face/${(bbsuser.avatar)!'none.gif'}" [/#if]  title='加为好友' />
+				               <span style="display:block;width:100%;text-align:center;font-size:1px">${bbsuser.username}</span>
+				           </a>
+			             </li>
+	                    [/#list]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   		<div class="panel panel-default">
+			  <div class="panel-heading">手机扫一扫</div>
+			  <div class="panel-body">
+		    	<a href="#" id="qcImg" class="thumbnail" data-toggle="popover" data-placement="left">
+		    	<img src="${resSys}/img/qrcode.png"/>
+		    	</a>
+		    	<h5>快上手机吐槽笔记网吧</h5>
+		    	<p>手机也能上吐槽笔记网了，快打开微信扫一扫，吐槽吐槽吧！</p>
+		    	<div id="show_qc_content" style="display: none;"><img src='${resSys}/img/show_qr.png' style="width:258px;height:376px" /></div>
+			  </div>
+			</div>
+			<div class="panel panel-default">
+	   			<div class="panel-heading">新浪关注</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">	   					
+			             <li>
+			                <div style="float:left;margin-left:5px;margin-right:5px">
+			                 <div style="margin-bottom:5px;margin-top:5px;font-size:12px;width:75px">鼠标点击新动态图标来关注我最新动态</div>
+			                 <div><wb:follow-button uid="3763714785" type="red_1" ></wb:follow-button></div>			   
+			             </div>	
+				           <div style="float:right;">
+			                  <img src="/bj/img/weibotp.jpg" style="width:130px;height:120px"/>
+			              </div>
+			           
+			             </li>	                   
+	   				</ul>
+	   			</div>
+	   		</div>
+	   	</div>
+	   	<div style="clear: both;font-size:0;height: 0px"></div>
+	   </div>
+	</div>
+</div>
+
+[#include "../include/页脚.html"/]
+</div>
+  </body>
+</html>

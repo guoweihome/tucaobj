@@ -1,0 +1,169 @@
+<script type="text/javascript">
+    
+	function keepsession() {
+		$.post("${base}/keepSession.jspx?minute=10&interval=5", {}, function(
+				data) {
+		}, "json");
+		setTimeout("keepsession() ", 1000 * 60 * 5);
+	}
+	keepsession();
+	
+	
+	
+	 var wbox_regi=$("#wboxRegi").wBox({
+           title: "注册",
+           opacity:0.5,
+           iframeWH:{width:420,height:350},
+           requestType: "iframe",
+           target:"${base}/user_register.jspx"
+        });
+        
+	var wBox=$("#wbox").wBox({
+           title: "登录",
+           opacity:0.5,
+           iframeWH:{width:380,height:250},
+           requestType: "iframe",
+           target:"${base}/userlogin.jspx"
+        });
+        
+   
+        
+	function user_login(){
+	   wBox.showBox();
+	}
+	
+	function user_regi(){
+	 // alert("sd");
+	  wbox_regi.showBox();
+	}
+	
+	function regeinfo(){
+	  wbox_regi.close();
+	  wBox.showBox();
+	}
+	
+	function changeinfo(){
+	   wBox.close();
+	   //alert($("#returnvalue").val());
+	   if($("#returnvalue").val()==null||$("#returnvalue").val()==""){
+	       $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl=/">退出</a>】');
+	   }else{
+	       $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl='+$("#returnvalue").val()+'">退出</a>】');	       
+	   }
+	   
+	   //if($("#nav-user")!=null){
+	       window.location.reload();
+	  // }
+	  
+	}
+	
+	 function login_register(){
+	    wBox.close();
+	     wbox_regi.showBox();
+	    
+	}
+	function login_findpwd(){
+	  wBox.close();
+	   wbox_forget.showBox();
+	}
+	
+	
+	
+  var wbox_qq=$("#wbox_qq").wBox({
+           title: "账户与QQ绑定",
+           opacity:0.5,
+           iframeWH:{width:350,height:300},
+           requestType: "iframe",
+           target:"${base}/qquser_bind.jspx"
+        });
+        
+   var wbox_mysay=$("#wbox_mysay").wBox({
+           title: "我要吐槽",
+           opacity:0.5,
+           iframeWH:{width:700,height:400},
+           requestType: "iframe",
+           target:"${base}/tucaoforward.jhtml"
+        });
+    
+   function  user_mysay()  {
+       if('${user!}'==null||'${user!}'==''){
+         alert("你用户需要登录!");
+       }else{
+         wbox_mysay.showBox();
+       }
+   }  
+   
+   function user_mysay_return(){
+      if(wbox_mysay!=null){
+        wbox_mysay.close();
+        document.location.href ="/shuosh.jhtml";
+      }
+   }
+   
+   if("${qqlogin!}"!=null&&"${qqlogin!}"=='1'){
+       wbox_qq.showBox();
+   }
+   
+   function user_parentloginbind(){
+       if(wbox_qq!=null){
+         wbox_qq.close();
+         if($("#returnUrl").val()==null||$("#returnUrl").val()==""){
+	                   $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl=/">退出</a>】');
+	      }else{
+	                   $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl='+$("#returnUrl").val()+'">退出</a>】');	       
+	      }
+	      window.location.reload();
+       } 
+   }
+   
+   function user_parentuserloginrigth(){
+       if(wbox_qq!=null){
+         wbox_qq.close();
+         if($("#returnUrl").val()==null||$("#returnUrl").val()==""){
+	                   $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl=/">退出</a>】');
+	      }else{
+	                   $("#logininfo").html('【<a href="${base}/logout.jspx?returnUrl='+$("#returnUrl").val()+'">退出</a>】');	       
+	      }
+	      window.location.reload();
+       }
+     
+   }
+</script>
+<input type="hidden" name="returnvalue" id="returnvalue" value=""/>
+<div class="toolbar">
+	<div class="toolbar-inner">
+		<div class="toolbar-left">
+			<a class="logo" target="_blank" href="http://www.tucaobj.com"><img
+					width="141" height="50" alt="" src="/bj/img/logo.png" />
+			</a>
+			<a  target="_blank" href="/">首页</a>
+			<a   target="_blank" href="${base}/shuosh.jhtml">最近的吐槽</a>
+		<!-- class="index" 	<a target="_blank" href="/main.jhtml">排行榜</a>-->
+			<a target="_blank" href="/main.jhtml" class="index">社区</a>
+			 [#if  user??]		
+				<a href="${base}/member/index.jhtml" target="_blank">用户中心</a>		
+			[/#if]
+		</div>
+		<div class="toolbar-right">
+			<a href="javascript:vod(0)" id="wbox_mysay" onclick="javascript:user_mysay();">我要吐槽</a>|
+			<span id="logininfo">			
+			  [#if  user??]
+			    [#if returnUrl?? && returnUrl?length gt 0]
+                                              【<a href="${base}/logout.jspx?returnUrl=${returnUrl!}">退出</a>】
+                  [#else]
+                                               【<a href="${base}/logout.jspx?returnUrl=/">退出</a>】
+                 [/#if]
+			[#else]
+			   <a href="#" id="wbox" onclick="javascript:user_login();">登录</a>|
+			   <a href="#" id="wboxRegi" onclick="javascript:user_regi();">注册</a>
+			[/#if]
+			</span>
+			
+		<!-- 	<span class="search-t"> <input name="keyword" type="text"
+					class="input" id="keyword" value="" /> <label for="keyword"
+					id="for-keyword" class="label">
+					搜索
+				</label> <span class="submit">提交</span> </span> -->
+		</div>
+	</div>
+</div>

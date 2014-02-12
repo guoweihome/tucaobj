@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="/r/cms/jquery.js"></script>
+		<style>
+     .rfm {
+	      margin: 0 auto;
+ 	      border-bottom: 1px dotted #CDCDCD;
+      }
+      
+      .mbw {
+          margin-bottom: 20px !important;
+}
+
+.pnc {
+border-color: #235994;
+background-color: #06C;
+background-position: 0 -48px;
+color: #FFF !important;
+}
+
+.bw0 {
+background: transparent;
+}
+
+.userlogin{
+font: 12px/1.5 Tahoma,'Microsoft Yahei','Simsun';
+color: #444;
+}
+</style>
+<script>
+
+  function userRege(){
+   // $("#jvForm").validate();
+      //表单验证
+    $("#jvForm").validate({
+        onkeyup  : false,
+        onclick  : false,
+        onfocusout : false,
+            invalidHandler : function(){
+                return false;
+            },
+            submitHandler : function(){
+                //表单的处理
+               
+           $.ajax( {
+            url : "${base}/user_register.jspx",
+            type: "POST",
+            data:{
+                "username":$('#username').val(),
+                "password":$('#password').val(),
+                "email":$('#email').val(),
+                "captcha":$('#captcha').val(),
+                "processUrl":$('#processUrl').val(),
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+
+                if(result.success){
+                     window.parent.document.getElementById("returnvalue").value=result.msg;
+                    window.parent.regeinfo();
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+                  
+               //confirm
+                return false;//阻止表单提交
+           }
+        });
+     // alert("ss");
+  }
+</script>
+	</head>
+	<body style="width:390px; height:330px;">
+           <form id="jvForm">
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>用户名：
+								</label>
+							</th>
+							<td>
+                             <input type="text" id="username" name="username" autocomplete="off" class="input" vld="{required:true,rangelength:[3,20],username:true,remote:'username_unique.jspx',messages:{remote:'用户名已存在！'}}"/>		
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>密　码：
+								</label>
+							</th>
+							<td>
+								<input type="password" name="password" id="password" class="input required" />
+							</td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>确认密码：
+								</label>
+							</th>
+							<td>
+                             <input type="password" equalto="#password" class="input" />
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left">
+								<label class="userlogin">
+									<span style="color:red">*</span>E-mail：
+								</label>
+							</th>
+							<td>
+                             <input type="text" id="email" name="email" vld="{remote:'email_unique.jspx',messages:{remote:'email已经被使用！'}}" class="input required email" />							</td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								<label class="userlogin">
+									<span style="color:red">*</span>验证码：
+								</label>
+							</th>
+							<td>
+                              <div>   <input type="text" class="input" name="captcha" id="captcha" vld="{required:true}"/>
+                                      <img height="35px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+                              </div>							
+                            </td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			
+            <input type="hidden" id="processUrl" name="processUrl"/>
+             <script type="text/javascript">
+                document.getElementById("processUrl").value=document.location;
+             </script>
+               [#if returnUrl?? && returnUrl?length gt 0]
+              <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+                [#else]
+                   <input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+              
+              [/#if]
+
+			<div class="rfm  bw0">
+				<table width="100%">
+					<tbody>
+						<tr>
+							<th style="width:80px;align:left;">
+								&nbsp;
+							</th>
+							<td>
+								<button class="pnc" type="submit" name="loginsubmit" onclick="javascript:userRege();">
+									<strong class="userlogin">同意以下协议并提交</strong>
+								</button>
+							</td>
+							<td>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="rfm bw0 ">
+				<hr class="l">
+					<table>
+						<tbody>
+							<tr>
+								<th class="userlogin" style="width:80px;align:left;">
+									快捷登录:
+								</th>
+								<td>
+
+									<a
+										href="${base}/qqindex.jspx"  target="_blank" ><img src="/bj/img/qq_login.gif" >
+									</a>
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+	</form>	
+	</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>消息回复 - ${site.name}</title>
+    <meta name="keywords" content="吐槽网、吐槽北京网、吐槽地铁、吐槽黑中介、吐槽电商、吐槽" />
+    <meta name="description" content="吐槽北京中介、交通等民生话题" /> 
+	<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+    <link href="/${res}/bbs_forum/css/whole.css" type="text/css" rel="stylesheet" />
+    <link href="/${res}/bbs_forum/css/layout.css" type="text/css" rel="stylesheet" />
+    <link href="/${res}/bbs_member/css/set.css" type="text/css" rel="stylesheet" />
+                    <link href="/bj/css/front.css" rel="stylesheet" type="text/css"/>
+    [#include "../include/common-header.html"/]
+    <style type="text/css">
+    #set-menu li.current9{background:url(/${res}/bbs_member/img/fav-cur.gif) no-repeat 0 0.5em;}
+    #set-menu li.current9 a{color:#707070;font-weight:700}
+    </style>
+    <script>
+    	function ajax_delete(id){
+			$.post("ajax_delete_reply.jhtml",{"rid":id},function(data){
+				if(data.success){
+					$("#r"+id).remove();
+				}else{
+			        bootbox.alert("操作失败！");
+				}
+			},"json");
+        }
+    </script>
+  </head>
+  <body>
+  [#include "./个人中心导航.html"/] 
+    <div style="margin-top:50px"></div>
+    <div id="main_content">
+	<div class="container">
+	 <div class="row">
+	   
+	    <ul class="breadcrumb" style="margin: 0 0 10px 25px;">
+        <li><a href="${base}/">${site.name}</a><span class="divider">/</span></li>
+          <li><a href="${base}/member/index.jhtml">会员中心</a> <span class="divider">/</span></li>
+	     <li class="active">&raquo;消息回复</li>
+	   </ul>	
+	   
+	   <div class="span3">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">会员中心首页</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					 [#include "会员中心页_导航.html"/]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   	
+	   	</div>
+	   <div class="span9">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">信息</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   				   <div>
+    <div class="set-tab-table">
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tbody>
+        <tr class="tac" id="infolist">
+          <td class="current"><a href="#" style="cursor: pointer">[#if msg.msgType==1]消息回复[#elseif msg.msgType==2]留言回复[/#if]</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="set-tab-box"">
+    [#if msg.sys]
+		<span style="color:blue">系统</span>　${msg.createTime?string("yyyy-MM-dd HH:mm")}<br/>
+		${msg.content!}
+	[#else]
+		[@msg_reply_page mid=msg.id count=10]
+		[#list tag_pagination.list as reply]
+		<span id="r${reply.id}">
+		<span style="color:blue">[#if reply.sender.id==user.id]您[#else]${reply.sender.username}[/#if]</span>　${reply.createTime?string("yyyy-MM-dd HH:mm")}　　　<a href="javascript:ajax_delete('${reply.id}')">删除</a>
+		<br/>
+		${reply.content!}
+		<br/>
+		</span>
+		[/#list]
+		[/@msg_reply_page]
+		[#assign u]
+		[#if msg.sender.id==user.id]
+		${msg.receiver.username}
+		[#else]
+		${msg.sender.username}
+		[/#if]
+		[/#assign]
+		 <form action="sendMsg.jhtml" method="post">
+	     	<input type="hidden" name="u" value="${u?trim}"/><br />
+	     	内　容:<textarea name="content" rows="6" cols="70"></textarea><br />
+	     	<input type="hidden" value="${msg.msgType!}" name="msgType"/>
+	     	<input type="submit" value="发送"/>
+	     </form>
+	[/#if]
+    </div>
+    [@msg_reply_page mid=msg.id count=10]
+    [#include "../tag/topic.html"/]
+    [/@msg_reply_page]
+    </div>
+	   					 </ul>
+	   			</div>
+	   		</div>
+	       </div>	       
+	  <div>	    
+	 </div>	 
+	 </div>	      	  
+	</div>
+	</div>
+
+  [#include "../include/页脚.html"/]
+  
+
+  </body>
+</html>

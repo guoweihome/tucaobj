@@ -1,0 +1,135 @@
+
+
+
+  		<div id="loginError5" class="text-center"></div>
+		 <form class="form-horizontal" id="jvFormsina" >
+		 
+		  <div class="control-group">
+		    <label class="control-label" for="username">用户名</label>
+		    <div class="controls">		    
+		      <input type="text" name="username" id="username" placeholder="请输入用户名"  data-rule="required;username"/>
+		      <a id="regeUserModel4" >注册</a>
+		    </div>
+		  </div>
+		  
+		 <div class="control-group">
+		   <label class="control-label" for="password">密码</label>
+		    <div class="controls">
+		      <input type="password" name="password" id="password" placeholder="请输入密码"  data-rule="required;password"/>
+		      <a id="getPasswordModel3" >找回密码</a>
+		    </div>
+		 </div>
+		 
+		 <div class="control-group">
+		    <label class="control-label" for="captcha">验证码</label>
+		    <div class="controls">
+		      <input type="text" class="input" name="captcha" id="captcha"  placeholder="请输入验证码" data-rule="required"/>
+		       <img height="35px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+		    </div>
+		 </div>
+		
+		  [#if returnUrl?? && returnUrl?length gt 0]
+              <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+                [#else]
+                   <input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+              
+              [/#if]
+              
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit"  class="btn btn-primary" id="sinabindBtn" data-loading-text="正在微博与账户绑定">微博与账户绑定</button>
+		      <button type="button"  class="btn btn-primary" id="sinanobindBtn" data-loading-text="正在提交">不绑定</button>
+		    </div>
+		  </div>
+		  <hr/>
+		   <div class="control-group">
+		      <label class="control-label">
+		                 说明:
+		      </label>
+		      <div class="controls">
+		                   新浪微博不与账户绑定,系统会自动生成一个默认账户!
+		      </div>
+		  </div>			 
+		</form>
+ <script type="text/javascript">
+ $("document").ready(function(){
+
+         var ajaxOptions = {
+            url:"${base}/user_loginsinabind.jspx",
+            type:'post',
+            dataType:'json',
+            timeout:10000,
+            cache:false,
+            success : function(responseJson) {
+                   if(responseJson.success){
+                         bt_alert.info("loginError5","绑定新浪微博成功");
+		                window.setTimeout('window.location.reload()',1000); 
+                  }else{
+                       bt_alert.error("loginError5",responseJson.msg);
+                  }
+            },
+		    error:function(xhr, ajaxOptions, thrownError){
+		        	bt_alert.error("loginError5","Http status: " + xhr.status + " " + xhr.statusText);
+		    }
+        };
+        
+       $("#sinabindBtn").click(function(){
+          
+         $('#jvFormsina').off('valid.form');
+         $('#jvFormsina').on('valid.form', function(e, form){          
+                 $("#jvFormsina").ajaxSubmit(ajaxOptions);
+         });
+              
+       });
+	
+	 $("#sinanobindBtn").click(function(){        
+           $.ajax( {
+            url : "${base}/user_loginsinanobind.jspx",
+            type: "POST",
+            data:{
+                "processUrl":"",
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+               if(result.success){
+                     bt_alert.info("loginError5","一键注册成功");
+		             window.setTimeout('window.location.reload()',1000); 
+                }else{
+                    bt_alert.error("loginError5",result.msg);
+                }      
+            }
+          });      
+       });
+
+    $("#getPasswordModel3").click(function(){
+		$('#myModal').modal('hide');
+		 window.setTimeout(infopass,1000);
+		
+	});
+	
+	function infopass(){
+	   $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"/member/forgot_pwd.jspx"
+        });
+	}
+	
+	$("#regeUserModel4").click(function(){
+		$('#myModal').modal('hide');
+		 window.setTimeout(info,1000);
+		
+	});
+	
+	function info(){
+	   $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"/user_register.jspx"
+        });
+	}
+    
+ });
+
+</script>

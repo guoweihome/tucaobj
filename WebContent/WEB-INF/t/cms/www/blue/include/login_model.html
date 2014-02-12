@@ -1,0 +1,131 @@
+
+
+
+  		<div id="loginError" class="text-center"></div>
+		 <form class="form-horizontal" id="login_form">
+		 
+		  <div class="control-group">
+		    <label class="control-label" for="username">用户名</label>
+		    <div class="controls">
+		      <input type="text" name="username" id="username" placeholder="请输入用户名"  value="${cookie_username!}"/>
+		      <a id="regeUserModel2" >注册</a>
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="password">密码</label>
+		    <div class="controls">
+		      <input type="password" name="password" id="password" placeholder="请输入密码" value="${cookie_password!}" />
+		       <a id="getPasswordModel" >找回密码</a>
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="password">记住我</label>
+		    <div class="controls">
+		      <select class="userlogin" id="cookieType" name="cookieType">
+					<option value="4" selected="selected">不保存</option>
+					<option value="3">保存1天</option>
+					<option value="2">一个月</option>
+					<option value="1">1年</option>
+					<option value="0">永久</option>
+                </select>
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="button" class="btn btn-primary" id="loginBtn" data-loading-text="正在登陆" >登&nbsp;&nbsp;&nbsp;&nbsp;陆</button>
+		    </div>
+		  </div>
+		  <hr/>
+		   <div class="control-group">
+		      <label class="control-label">
+		               快捷登录
+		      </label>
+		      <div class="controls">
+		      <a href="${base}/qqindex.jspx" target="_blank"><img src="/bj/img/qq_login.gif" /></a>&nbsp;&nbsp;&nbsp;
+		      <a href="${base}/sinaindex.jspx" target="_blank" ><img src="/bj/img/sina_login.png"/></a>
+		      </div>
+		  </div>
+		  
+		   <input type="hidden" id="processUrl" name="processUrl"/>
+             <script type="text/javascript">
+                document.getElementById("processUrl").value=document.location;
+             </script>
+               [#if returnUrl?? && returnUrl?length gt 0]
+              <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+                [#else]
+                   <input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+              
+              [/#if]
+		</form>
+ <script type="text/javascript">
+ $("document").ready(function(){
+
+      //登陆
+   $("#loginBtn").click(function(){
+   		var btn = $(this);
+		if($("#username").val()==null||$("#username").val()==""){
+			bt_alert.error("loginError","用户名不能为空!");
+		    return;
+		}
+		if($("#password").val()==null||$("#password").val()==""){
+		   bt_alert.error("loginError","密码必须输入!");
+		   $("#password").focus();
+		   return;
+		}
+		btn.button('loading');
+		$.ajax({
+		        url : "/loginsubmit.jspx",
+		        type: "POST",
+		        data:$("#login_form").serializeArray(),
+		        dataType:"json",
+		        success:function (result) {
+		        	btn.button('reset');
+		            if(result.success){
+		                bt_alert.info("loginError","登陆成功");
+		                window.setTimeout('window.location.reload()',1000);
+		            }else{
+		                bt_alert.error("loginError",result.msg);
+		            }
+		        },
+		        error:function(xhr, ajaxOptions, thrownError){
+		        	btn.button('reset');
+		        	bt_alert.error("loginError","Http status: " + xhr.status + " " + xhr.statusText);
+		        }
+		});
+	});//end 登陆
+	
+
+    $("#getPasswordModel").click(function(){
+		$('#myModal').modal('hide');
+		 window.setTimeout(infopass,1000);
+		
+	});
+	
+	function infopass(){
+	   $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"/member/forgot_pwd.jspx"
+        });
+         $('#myModal').modal({show:true,backdrop:false}); 
+	}
+	
+	$("#regeUserModel2").click(function(){
+		$('#myModal').modal('hide');
+		 window.setTimeout(info,1000);
+		
+	});
+	
+	function info(){
+	   $("#myModal").modal({
+            backdrop : "static",
+            keyboard: true,
+            remote:"/user_register.jspx"
+        });
+       $('#myModal').modal({show:true,backdrop:false}); 
+	}
+    
+ });
+
+</script>
+

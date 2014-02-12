@@ -1,0 +1,191 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="/r/cms/jquery.js"></script>
+		<style>
+     .rfm {
+	      margin: 0 auto;
+ 	      border-bottom: 1px dotted #CDCDCD;
+      }
+      
+      .mbw {
+          margin-bottom: 20px !important;
+}
+
+.pnc {
+border-color: #235994;
+background-color: #06C;
+background-position: 0 -48px;
+color: #FFF !important;
+}
+
+.bw0 {
+background: transparent;
+}
+
+.userlogin{
+font: 12px/1.5 Tahoma,'Microsoft Yahei','Simsun';
+color: #444;
+}
+</style>
+<script>
+  function userSubmit(){
+     if($("#username").val()==null||$("#username").val()==""){
+        alert("账户必须输入!");
+        return;
+     }
+     
+     if($("#password").val()==null||$("#password").val()==""){
+         alert("密码必须输入!");
+        return;
+     }
+    
+     $.ajax( {
+            url : "${base}/loginsubmit.jspx",
+            type: "POST",
+            data:{
+                "username":$('#username').val(),
+                "password":$('#password').val(),
+                "cookieType":$('#cookieType').val(),
+                "processUrl":$('#processUrl').val(),
+                "returnUrl":$('#returnUrl').val()
+            },
+            dataType:"json",
+            success:function (result) {
+
+                if(result.success){
+                    //alert("登陆成功!");  
+                     window.parent.document.getElementById("returnvalue").value=result.msg;
+                    window.parent.changeinfo();
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+     
+  }
+  
+  function login_findpwd(){
+     window.parent.login_findpwd();
+  }
+  
+  function login_register(){
+     window.parent.login_register();
+  }
+</script>
+	</head>
+	<body style="width:360px; height:230px;">
+
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th>
+								<label class="userlogin">
+									帐号:
+								</label>
+							</th>
+							<td>
+								<input  value="${cookie_username!}" title="请输入用户名" maxlength="16"  id="username" name="username" type="text" />
+							</td>
+							<td class="userlogin">
+								<a href="#" onclick="javascript:login_register();">注册</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th>
+								<label class="userlogin">
+									密码:
+								</label>
+							</th>
+							<td>
+								<input  value="${cookie_password!}" title="请输入密码" type="password" maxlength="18" id="password" name="password" />
+							</td>
+							<td class="userlogin">
+								<a href="#"  onclick="javascript:login_findpwd();" title="找回密码">找回密码</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="rfm">
+				<table>
+					<tbody>
+						<tr>
+							<th class="userlogin">
+								记住我:
+							</th>
+							<td>
+								<select class="userlogin" id="cookieType" name="cookieType">
+                                          <option value="4" selected="selected">不保存</option>
+                                           <option value="3">保存1天</option>
+                                          <option value="2">一个月</option>
+                                           <option value="1">1年</option>
+                                             <option value="0">永久</option>
+                                  </select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+            <input type="hidden" id="processUrl" name="processUrl"/>
+             <script type="text/javascript">
+                document.getElementById("processUrl").value=document.location;
+             </script>
+               [#if returnUrl?? && returnUrl?length gt 0]
+              <input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl!}"/>
+                [#else]
+                   <input type="hidden" id="returnUrl" name="returnUrl" value="${site.urlWhole!}"/>
+              
+              [/#if]
+
+			<div class="rfm  bw0">
+				<table width="100%">
+					<tbody>
+						<tr>
+							<th>
+								&nbsp;
+							</th>
+							<td>
+								<button class="pnc" type="button" name="loginsubmit" onclick="javascript:userSubmit();">
+									<strong class="userlogin">登录</strong>
+								</button>
+							</td>
+							<td>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="rfm bw0 ">
+				<hr class="l">
+					<table>
+						<tbody>
+							<tr>
+								<th class="userlogin">
+									快捷登录:
+								</th>
+								<td>
+
+									<a href="${base}/qqindex.jspx" target="_blank"><img src="/bj/img/qq_login.gif" />
+									</a>
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+		
+	</body>
+
+</html>

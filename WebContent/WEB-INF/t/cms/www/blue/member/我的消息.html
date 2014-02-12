@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的消息</title>
+   <meta name="keywords" content="吐槽网、吐槽北京网、吐槽地铁、吐槽黑中介、吐槽电商、吐槽" />
+    <meta name="description" content="吐槽北京中介、交通等民生话题" /> 
+	<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+    <link href="/${res}/bbs_forum/css/whole.css" type="text/css" rel="stylesheet" />
+    <link href="/${res}/bbs_forum/css/layout.css" type="text/css" rel="stylesheet" />
+    <link href="/${res}/bbs_member/css/set.css" type="text/css" rel="stylesheet" />
+                <link href="/bj/css/front.css" rel="stylesheet" type="text/css"/>
+     <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+     [#include "../include/common-header.html"/]
+    <style type="text/css">
+    #set-menu li.current9{background:url(/${res}/bbs_member/img/fav-cur.gif) no-repeat 0 0.5em;}
+    #set-menu li.current9 a{color:#707070;font-weight:700}
+    </style>
+    <script>
+    	function ajax_delete(id){
+			$.post("ajax_delete_msg.jhtml",{"mid":id},function(data){
+				if(data.success){
+					$("#m"+id).remove();
+				}else{
+					alert("操作失败");
+				}
+			},"json");
+        }
+    </script>
+  </head>
+  <body>
+  [#include "./个人中心导航.html"/] 
+    <div style="margin-top:50px"></div>
+    <div id="main_content">
+	<div class="container">
+	 <div class="row">
+	   
+	    <ul class="breadcrumb" style="margin: 0 0 10px 25px;">
+        <li><a href="${base}/">${site.name}</a><span class="divider">/</span></li>
+          <li><a href="${base}/member/index.jhtml">会员中心</a> <span class="divider">/</span></li>
+	     <li class="active">&raquo;[#if typeId??][#if typeId==2]我的留言[#else]我的消息[/#if][#else]我的消息[/#if]</li>
+	   </ul>	
+	   
+	   <div class="span3">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">会员中心首页</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   					 [#include "会员中心页_导航.html"/]
+	   				</ul>
+	   			</div>
+	   		</div>
+	   	
+	   	</div>
+	   <div class="span9">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">信息</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   				   <div class="set-tab-table">
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tbody>
+        <tr class="tac" id="infolist">
+          <td class="current"><a href="#" style="cursor: pointer">[#if typeId??][#if typeId==2]我的留言[#else]我的消息[/#if][#else]我的消息[/#if]</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+     <div class="set-tab-box" style="height:100px;">
+     [@mymsg_page userId=user.id count=10 typeId=typeId]
+     	[#list tag_pagination.list as msg]
+     	<span id="m${msg.id}">
+     	[#if msg.sys]
+     		<span style="color:blue">系统消息</span>:${(msg.content)!}　${msg.createTime?string("yyyy-MM-dd HH:mm")}　<a href="reply.jhtml?mid=${msg.id}">查看</a>
+     	[#else]
+	     	<span style="color:blue">[#if msg.sender.id==user.id]您[#else]${msg.sender.username!}[/#if]</span>
+	     	对
+	     	<span style="color:blue">[#if msg.receiver.id==user.id]您[#else]${msg.receiver.username!}[/#if]</span>
+	     	说:
+	     	  [@text_cut s=msg.content append='...' len=20/]　${msg.createTime?string("yyyy-MM-dd HH:mm")}　<a href="reply.jhtml?mid=${msg.id}">[#if msg.sender.id==user.id]继续发送[#else]回复[/#if]</a>
+     	[/#if]
+     	　　<a href="javascript:ajax_delete('${msg.id}')">删除</a><br/>
+     	</span>
+     	[/#list]
+     [/@mymsg_page]
+    </div>
+    [@mymsg_page userId=user.id count=10 typeId=typeId]
+     [#include "../tag/topic.html"/]
+    [/@mymsg_page]
+    </div>
+	   				 </ul>
+	   			</div>
+	   		</div>
+	       </div>	       
+	  <div>	    
+	 </div>	 
+	 </div>	      	  
+	</div>
+	</div>
+
+  </body>
+</html>

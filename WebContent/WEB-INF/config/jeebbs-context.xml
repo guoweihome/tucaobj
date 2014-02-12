@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+	
+	<bean id="category_list" class="com.tucao.bbs.action.directive.CategoryDirective"/>
+	<bean id="forum_list" class="com.tucao.bbs.action.directive.ForumDirective"/>
+	<bean id="topic_page" class="com.tucao.bbs.action.directive.TopicPageDirective"/>
+	<bean id="post_page" class="com.tucao.bbs.action.directive.PostPageDirective"/>
+	<bean id="topic_vcount" class="com.tucao.bbs.action.directive.ViewCountDirective"/>
+	<bean id="my_topic" class="com.tucao.bbs.action.directive.MyTopicPageDirective"/>
+	<bean id="my_reply" class="com.tucao.bbs.action.directive.MyReplyPageDirective"/>
+	<bean id="config_count" class="com.tucao.bbs.action.directive.ConfigCountDirective"/>
+	<bean id="topic_day" class="com.tucao.bbs.action.directive.TopicDayPageDirective"/>
+	<bean id="newtopic_list" class="com.tucao.bbs.action.directive.NewTopicDirective"/>
+	<bean id="cms_friendlink_ctg_list" class="com.tucao.bbs.action.directive.CmsFriendlinkCtgListDirective"/>
+	<bean id="cms_friendlink_list" class="com.tucao.bbs.action.directive.CmsFriendlinkListDirective"/>
+	<bean id="bbs_posttype" class="com.tucao.bbs.action.directive.BbsPostTypeDirective"/>
+	<bean id="friend_page" class="com.tucao.bbs.action.directive.FriendPageDirective"/>
+	<bean id="friendship" class="com.tucao.bbs.action.directive.FriendDirective"/>
+	<bean id="myfriend_page" class="com.tucao.bbs.action.directive.MyFriendPageDirective"/>
+	<bean id="friend_apply_page" class="com.tucao.bbs.action.directive.FriendApplyPageDirective"/>
+	<bean id="mymsg_page" class="com.tucao.bbs.action.directive.MyMsgPageDirective"/>
+	<bean id="msg_reply_page" class="com.tucao.bbs.action.directive.MsgReplyPageDirective"/>
+	<bean id="member_online" class="com.tucao.bbs.action.directive.MemberOnlineDirective"/>
+	<bean id="msg_remember" class="com.tucao.bbs.action.directive.UnreadMsgDirective"/>
+	<!--后台权限标签-->
+	<bean id="cms_perm" class="com.tucao.bbs.web.PermistionDirective"/>
+	
+	<bean id="topicCountEhCache" class="com.tucao.bbs.cache.TopicCountEhCacheImpl"/>
+	<bean id="bbsConfigEhCache" class="com.tucao.bbs.cache.BbsConfigEhCacheImpl"/>
+	
+	<bean id="cmsSiteMng" class="com.tucao.core.manager.impl.CmsSiteMngImpl"/>
+	<bean id="bbsCategoryMng" class="com.tucao.bbs.manager.impl.BbsCategoryMngImpl"/>
+	<bean id="bbsUserMng" class="com.tucao.bbs.manager.impl.BbsUserMngImpl"/>
+	<bean id="bbsUserGroupMng" class="com.tucao.bbs.manager.impl.BbsUserGroupMngImpl"/>
+	<bean id="bbsUserExtMng" class="com.tucao.bbs.manager.impl.BbsUserExtMngImpl"/>
+	<bean id="bbsPostMng" class="com.tucao.bbs.manager.impl.BbsPostMngImpl"/>
+	<bean id="bbsTopicMng" class="com.tucao.bbs.manager.impl.BbsTopicMngImpl"/>
+	<bean id="bbsConfigMng" class="com.tucao.bbs.manager.impl.BbsConfigMngImpl"/>
+	<bean id="bbsForumMng" class="com.tucao.bbs.manager.impl.BbsForumMngImpl"/>
+	<bean id="bbsOperationMng" class="com.tucao.bbs.manager.impl.BbsOperationMngImpl"/>
+	<bean id="bbsGradeMng" class="com.tucao.bbs.manager.impl.BbsGradeMngImpl"/>
+	<bean id="attachmentMng" class="com.tucao.bbs.manager.impl.AttachmentMngImpl"/>
+	<bean id="cmsResourceMng" class="com.tucao.bbs.template.manager.impl.CmsResourceMngImpl"/>
+	<bean id="cmsConfigMng" class="com.tucao.core.manager.impl.CmsConfigMngImpl"/>
+	<bean id="cmsSensitivityMng" class="com.tucao.bbs.manager.impl.CmsSensitivityMngImpl"/>
+	<bean id="cmsFriendlinkCtgMng" class="com.tucao.bbs.manager.impl.CmsFriendlinkCtgMngImpl"/>
+	<bean id="cmsFriendlinkMng" class="com.tucao.bbs.manager.impl.CmsFriendlinkMngImpl"/>
+	<bean id="bbsFriendShipMng" class="com.tucao.bbs.manager.impl.BbsFriendShipMngImpl"/>
+	<bean id="bbsMessageMng" class="com.tucao.bbs.manager.impl.BbsMessageMngImpl"/>
+	<bean id="bbsMessageReplyMng" class="com.tucao.bbs.manager.impl.BbsMessageReplyMngImpl"/>
+	<bean id="bbsPostTypeMng" class="com.tucao.bbs.manager.impl.BbsPostTypeMngImpl"/>
+	
+	<bean id="staticPageSvc" class="com.tucao.bbs.manager.impl.StaticPageSvcImpl">
+		<property name="freeMarkerConfigurer">
+			<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+				<property name="freemarkerVariables">
+					<map>
+						<entry key="uuid" value-ref="uuid"/>
+						<entry key="process_time" value-ref="process_time"/>
+						<entry key="text_cut" value-ref="text_cut"/>
+						<entry key="html_cut" value-ref="html_cut"/>
+						<entry key="category_list" value-ref="category_list"/>
+						<entry key="forum_list" value-ref="forum_list"/>
+						<entry key="topic_page" value-ref="topic_page"/>
+						<entry key="post_page" value-ref="post_page"/>
+						<entry key="my_topic" value-ref="my_topic"/>
+						<entry key="my_reply" value-ref="my_reply"/>
+						<entry key="topic_vcount" value-ref="topic_vcount"/>
+						<entry key="config_count" value-ref="config_count"/>
+						<entry key="topic_day" value-ref="topic_day"/>
+						<entry key="newtopic_list" value-ref="newtopic_list"/>
+						<entry key="cms_friendlink_ctg_list" value-ref="cms_friendlink_ctg_list"/>
+						<entry key="cms_friendlink_list" value-ref="cms_friendlink_list"/>
+						<entry key="bbs_posttype" value-ref="bbs_posttype"/>
+						<entry key="friend_page" value-ref="friend_page"/>
+						<entry key="friendship" value-ref="friendship"/>
+						<entry key="myfriend_page" value-ref="myfriend_page"/>
+						<entry key="friend_apply_page" value-ref="friend_apply_page"/>
+						<entry key="mymsg_page" value-ref="mymsg_page"/>
+						<entry key="msg_reply_page" value-ref="msg_reply_page"/>
+						<entry key="member_online" value-ref="member_online"/>
+						<entry key="msg_remember" value-ref="msg_remember"/>
+					</map>
+				</property>
+				<property name="templateLoaderPath" value=""/>
+				<property name="freemarkerSettings">
+					<props>
+						<prop key="tag_syntax">auto_detect</prop>
+						<prop key="template_update_delay">5</prop>
+						<prop key="defaultEncoding">UTF-8</prop>
+						<prop key="url_escaping_charset">UTF-8</prop>
+						<prop key="locale">zh_CN</prop>
+						<prop key="boolean_format">true,false</prop>
+						<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+						<prop key="date_format">yyyy-MM-dd</prop>
+						<prop key="time_format">HH:mm:ss</prop>
+						<prop key="number_format">0.######</prop>
+						<prop key="whitespace_stripping">true</prop>
+						<!--空值处理<prop key="classic_compatible">true</prop>-->
+						<prop key="auto_import">/WEB-INF/ftl/pony/index.ftl as p,/WEB-INF/ftl/spring.ftl as s</prop>
+					</props>
+				</property>
+			</bean>
+		
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="bbsLoginLogMng" class="com.tucao.bbs.manager.impl.BbsLoginLogMngImpl"/>
+	<bean id="bbsUserOnlineMng" class="com.tucao.bbs.manager.impl.BbsUserOnlineMngImpl"/>
+	<bean id="bbsCreditExchangeMng" class="com.tucao.bbs.manager.impl.BbsCreditExchangeMngImpl"/>
+	<bean id="bbsCommonMagicMng" class="com.tucao.bbs.manager.impl.BbsCommonMagicMngImpl"/>
+	<bean id="bbsVoteItemMng" class="com.tucao.bbs.manager.impl.BbsVoteItemMngImpl"/>
+	<bean id="bbsVoteRecordMng" class="com.tucao.bbs.manager.impl.BbsVoteRecordMngImpl"/>
+	<bean id="bbsMagicConfigMng" class="com.tucao.bbs.manager.impl.BbsMagicConfigMngImpl"/>
+	<bean id="bbsMagicLogMng" class="com.tucao.bbs.manager.impl.BbsMagicLogMngImpl"/>
+	<bean id="bbsMemberMagicMng" class="com.tucao.bbs.manager.impl.BbsMemberMagicMngImpl"/>
+	<bean id="bbsReportMng" class="com.tucao.bbs.manager.impl.BbsReportMngImpl"/>
+	<bean id="bbsReportExtMng" class="com.tucao.bbs.manager.impl.BbsReportExtMngImpl"/>
+	
+	<bean id="cmsSiteDao" class="com.tucao.core.dao.impl.CmsSiteDaoImpl"/>
+	<bean id="bbsCategoryDao" class="com.tucao.bbs.dao.impl.BbsCategoryDaoImpl"/>
+	<bean id="bbsUserDao" class="com.tucao.bbs.dao.impl.BbsUserDaoImpl"/>
+	<bean id="bbsUserGroupDao" class="com.tucao.bbs.dao.impl.BbsUserGroupDaoImpl"/>
+	<bean id="bbsUserExtDao" class="com.tucao.bbs.dao.impl.BbsUserExtDaoImpl"/>
+	<bean id="bbsPostDao" class="com.tucao.bbs.dao.impl.BbsPostDaoImpl"/>
+	<bean id="bbsTopicDao" class="com.tucao.bbs.dao.impl.BbsTopicDaoImpl"/>
+	<bean id="bbsConfigDao" class="com.tucao.bbs.dao.impl.BbsConfigDaoImpl"/>
+	<bean id="bbsForumDao" class="com.tucao.bbs.dao.impl.BbsForumDaoImpl"/>
+	<bean id="bbsOperationDao" class="com.tucao.bbs.dao.impl.BbsOperationDaoImpl"/>
+	<bean id="bbsGradeDao" class="com.tucao.bbs.dao.impl.BbsGradeDaoImpl"/>
+	<bean id="attachmentDao" class="com.tucao.bbs.dao.impl.AttachmentDaoImpl"/>
+	<bean id="cmsConfigDao" class="com.tucao.core.dao.impl.CmsConfigDaoImpl"/>
+	<bean id="cmsSensitivityDao" class="com.tucao.bbs.dao.impl.CmsSensitivityDaoImpl"/>
+	<bean id="cmsFriendlinkCtgDao" class="com.tucao.bbs.dao.impl.CmsFriendlinkCtgDaoImpl"/>
+	<bean id="cmsFriendlinkDao" class="com.tucao.bbs.dao.impl.CmsFriendlinkDaoImpl"/>
+	<bean id="bbsFriendShipDao" class="com.tucao.bbs.dao.impl.BbsFriendShipDaoImpl"/>
+	<bean id="bbsMessageDao" class="com.tucao.bbs.dao.impl.BbsMessageDaoImpl"/>
+	<bean id="bbsMessageReplyDao" class="com.tucao.bbs.dao.impl.BbsMessageReplyDaoImpl"/>
+	<bean id="bbsPostTypeDao" class="com.tucao.bbs.dao.impl.BbsPostTypeDaoImpl"/>
+	
+	<bean id="bbsLoginLogDao" class="com.tucao.bbs.dao.impl.BbsLoginLogDaoImpl"/>
+	<bean id="bbsUserOnlineDao" class="com.tucao.bbs.dao.impl.BbsUserOnlineDaoImpl"/>
+	<bean id="bbsCreditExchangeDao" class="com.tucao.bbs.dao.impl.BbsCreditExchangeDaoImpl"/>
+	<bean id="bbsCommonMagicDao" class="com.tucao.bbs.dao.impl.BbsCommonMagicDaoImpl"/>
+	<bean id="bbsVoteItemDao" class="com.tucao.bbs.dao.impl.BbsVoteItemDaoImpl"/>
+	<bean id="bbsVoteRecordDao" class="com.tucao.bbs.dao.impl.BbsVoteRecordDaoImpl"/>
+	<bean id="bbsMagicConfigDao" class="com.tucao.bbs.dao.impl.BbsMagicConfigDaoImpl"/>
+	<bean id="bbsMagicLogDao" class="com.tucao.bbs.dao.impl.BbsMagicLogDaoImpl"/>
+	<bean id="bbsMemberMagicDao" class="com.tucao.bbs.dao.impl.BbsMemberMagicDaoImpl"/>
+	<bean id="bbsReportDao" class="com.tucao.bbs.dao.impl.BbsReportDaoImpl"/>
+	<bean id="bbsReportExtDao" class="com.tucao.bbs.dao.impl.BbsReportExtDaoImpl"/>
+</beans>

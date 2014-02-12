@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>${site.name} - 吐槽笔记网</title>
+<meta name="keywords" content="吐槽网、吐槽笔记网、吐槽交通、吐槽黑中介、吐槽电商、吐槽天气" />
+<meta name="description" content="吐槽北京中介、交通等民生话题" /> 
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+[#include "../include/common-header.html"/]
+<style type="text/css">
+a:hover{text-decoration: none;}
+#main_content,#footer{padding-top: 50px;}
+</style>
+  </head>
+  
+  <body>
+[#include "../include/社区导航.html"/]
+
+<div id="main_content">
+	<div class="container">
+		<div class="row"><div class="span12">
+		
+		<ul class="breadcrumb">
+		  <li><a href="${base}/">${site.name}</a><span class="divider">/</span></li>
+		  <li class="active">论坛版块</li>
+		</ul>
+		
+	 	  [@category_list]
+    	  [#list tag_list as ctg]
+    	   <div class="panel panel-default">
+		   <div class="panel-heading">${ctg.title!}</div>
+		 
+		   <!-- 社区主题 -->
+		   <div class="panel-body">
+		   <div class="container"><div class="row">
+		   [@forum_list categoryId=ctg.id]
+		   [#list tag_list as forum]
+	   		<div class="span6">
+	   			<div class="media">
+		   			<a class="pull-left" href="${forum.url!}">
+	   				[#if forum.postToday gt 0]
+	            		<img src="/r/cms/www/blue/bbs_forum/img/top/tie002.gif" class="media-object"/>
+	             		[#else]
+	             		<img src="/r/cms/www/blue/bbs_forum/img/top/tie001.gif" class="media-object"/>
+	           		[/#if]
+	           		</a>
+	           		<div class="media-body">
+				      <h4 class="media-heading">
+				      <a href="${forum.url!}">${forum.title!}</a>
+				      [#if forum.postToday gt 0]<span class="badge badge-info" style="display: inline;">${forum.postToday!}</span>[/#if]
+				      </h4>
+				      <span>
+				      	[#if forum.lastPost??]
+				    	<a href="${forum.lastPost.url!}" title="${forum.lastPost.topic.title!}">[#if forum.lastPost.topic.title?? && forum.lastPost.topic.title?length gt 20] ${forum.lastPost.topic.title?substring(0,20)}..[#else]${forum.lastPost.topic.title!}[/#if]</a>
+					   	<span class="muted">[${forum.lastReply.username!}]发表于${forum.lastTime!?string("yyyy-MM-dd")}</span>
+					   	[#else]
+					   	<p>无</p>
+					    [/#if]
+				      	
+					    <ul class="inner list-inline" style="margin: 0">
+					    	<li><span class="caps muted">主题:</span>${forum.topicTotal!}</li>
+		           			<li><span class="caps muted">贴数:</span>${forum.postTotal!}</li>
+					    </ul>
+				      </span>
+				    </div><!-- media-body -->
+           		</div><!-- media -->
+	   		</div><!-- span6 -->
+		   [/#list]
+		   [/@forum_list]
+		  </div><!-- row -->
+		  </div><!-- container -->
+		   </div><!-- panel-body end -->
+		   <!-- 社区主题end -->
+			</div>
+		   [/#list]
+    	[/@category_list]
+    	</div></div><!-- row -->
+	</div><!-- container -->
+</div>
+[#include "../include/页脚.html"/]
+  </body>
+</html>

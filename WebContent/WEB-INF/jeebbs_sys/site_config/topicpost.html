@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>北京吐槽网</title>
+<#include "/jeebbs_sys/head.html"/>
+<script type="text/javascript">
+
+function keepsave(id){
+    
+    //alert($("#comefrom_"+id).val());
+    if($("#comefrom_"+id).val()==null||$("#comefrom_"+id).val()==""){
+      alert("请添加来源!");
+      return;
+    }
+    $.ajax( {
+              url : "${base}/jspkongjian/tucaobbs/bbs_config/v_topicpostadd.do",
+              type: "POST",
+              data:{
+               "id":id,
+               "comfrom":$("#comefrom_"+id).val()
+              },
+             dataType:"json",
+            success:function (response) {
+                 alert("ok");
+                 //alert(respense.msg);    
+            }
+     });
+           
+}
+
+function staticIndex(){
+	$.ajax( {
+          url : "staticIndex.do",
+          type: "POST",
+          dataType:"json",
+          success:function (response) {
+               alert("ok");
+          }
+    });
+}
+
+function keepsave2(){
+  alert("");
+}
+</script>
+</head>
+<body>
+<div class="body-box">
+<div class="rhead">
+	<div class="rpos">版主推荐页面</div>
+	<div class="clear"></div>
+</div>
+   <table border="1">
+   <#list list as topic>
+     <tr>
+       <td>
+                  序号：${topic_index+1}
+       </td>
+        <td>
+          标题：${topic.title}
+        </td>
+        <td>
+         来源：<input type="text" id="comefrom_${topic.id}" value="${topic.comefrom!}" size="20"/>
+        </td>
+        <td>
+          <a href="#" onclick="javascript:keepsave('${topic.id}')">save</a>
+        </td>
+     </tr>
+            
+   </#list>
+   </table>
+   <br/>
+   <input type="button" value="静态化首页" onclick="staticIndex()"/>
+</div>
+<#include "/common/alert_message.html"/>
+</body>
+</html>

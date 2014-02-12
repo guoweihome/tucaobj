@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>置顶/解除置顶</title> 
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="/${res}/bbs_forum/css/whole.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/bbs_forum/css/layout.css" />
+ <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+     [#include "../include/common-headersimple.html"/]
+<script type="text/javascript">
+	$("#jvForm").validate($.validator.AlertError);
+</script>
+</head>
+
+<body>
+ [#include "../include/社区导航.html"/] 
+    <div style="margin-top:50px"></div>
+    <div id="main_content">
+	<div class="container">
+	 <div class="row">
+	   
+	    <ul class="breadcrumb" style="margin: 0 0 10px 25px;">
+        <li><a href="${base}/">${site.name}</a><span class="divider"></span></li>
+	     <li class="active">&raquo; 置顶/解除置顶</li>
+	   </ul>	
+	         <div class="span12">
+	   		<div class="panel panel-default">
+	   			<div class="panel-heading">置顶/解除置顶</div>
+	   			<div class="panel-body">
+	   				<ul class="inner list-inline">
+	   				  <div class="t z">
+<form id="jvForm" action="${base}/topic/o_upTopSubmit.jspx" method="post">
+	<table cellspacing="0" cellpadding="0" align="center" width="100%">
+	
+	<tr class="tr2"><td colspan="99" style="border-bottom:0"></td></tr>	
+	<tr>
+	  <td valign="top" width="20%" class="f_one" style="padding:7px"><b>级 别</b></td>
+		<td valign="top" class="f_one" style="padding:7px">
+		<input type="radio" id="topLevel0" name="topLevel" value="0" checked="checked"/><label for="topLevel0">解除置顶</label>
+		<input type="radio" id="topLevel1" name="topLevel" value="1"/><label for="topLevel1">本版置顶</label>
+		<input type="radio" id="topLevel2" name="topLevel" value="2"/><label for="topLevel2">分区置顶</label>
+		<input type="radio" id="topLevel3" name="topLevel" value="3"/><label for="topLevel3">全局置顶</label>
+		</td>
+	</tr>	
+	<tr>
+	  <td valign="top" width="20%" class="f_one" style="padding:7px"><b>操作原因</b></td>
+		<td valign="top" class="f_one" style="padding:7px">
+		<select size="6" style="width:100px;" onchange="this.form.reason.value=this.value">
+			<option value="">自定义</option>
+			<option value="">--------</option>
+			<option value="广告/SPAM">广告/SPAM</option>
+			<option value="恶意灌水">恶意灌水</option>
+			<option value="违规内容">违规内容</option>
+			<option value="文不对题">文不对题</option>
+			<option value="重复发帖">重复发帖</option>
+			<option value="">--------</option>
+			<option value="我很赞同">我很赞同</option>
+			<option value="精品文章">精品文章</option>
+			<option value="原创内容">原创内容</option>
+		</select>
+		<textarea id="reason" name="reason" rows="6" cols="80"></textarea>
+		</td>
+	</tr>	
+	<tr>
+	  <td valign="top" class="f_one" style="padding:7px">&nbsp;</td>
+	  <td valign="top" class="f_one" style="padding:7px">
+	   [#list topicIds as topicId]
+		<input type="hidden" name="topicIds" value="${topicId!}"/>
+	   [/#list]
+	    <input type="hidden" name="forumId" value="${forum.id!}" />
+		<input type="submit" class="btn fl b" style="padding:0 1em;*padding:0;height:28px;" value="提 交"/>
+	  </td>
+	  </tr>
+</table>
+</form>
+</div>
+	   				</ul>
+	   			</div>
+	   		</div>
+	       </div>	       
+	  <div>	    
+	 </div>	 
+	 </div>	      	  
+	</div>
+	</div>
+
+  [#include "../include/页脚.html"/]
+  
+ 
+</body>
+</html>
