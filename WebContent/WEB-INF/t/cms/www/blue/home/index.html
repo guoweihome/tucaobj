@@ -9,7 +9,6 @@
 <script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
 <script type="text/javascript">
     function jsout(url,title,id){   
-     //alert(url);    
       var p = {
            url:url,
            showcount:'0',/*是否显示分享总数,显示：'1'，不显示：'0' */
@@ -136,7 +135,7 @@ a:hover{text-decoration: none;}
 			       <span class="pull-left">
 			          <ul class="inner list-inline muted">
 			            <li><a href='javascript:vod(0)' rel='nofollow'>${bbs.createString}</a></li>
-			            <li>来自<a href='javascript:vod(0)' rel='nofollow'>${bbs.comefrom}</a></li>
+			            <li>来自<a href='javascript:vod(0)' rel='nofollow'>${bbs.comefrom!}</a></li>
 			           </ul>
 			       </span>
 			       <span class="pull-right">
